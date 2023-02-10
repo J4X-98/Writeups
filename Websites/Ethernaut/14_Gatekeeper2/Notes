@@ -1,0 +1,8 @@
+1. Stage:
+Just send it via a contract
+
+2. Stage:
+Needs to be sent from the constructor so extcodesize is 0
+
+3. Stage:
+You just need to xor the keccak256 of the contracts adress with max to get the right value

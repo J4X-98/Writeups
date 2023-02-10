@@ -1,0 +1,16 @@
+Buffer overflow (i guess)
+
+https://medium.com/@fifiteen82726/solidity-attack-array-underflow-1dc67163948a
+
+1. make_contact()
+2. use record
+3. 2x retract -> Length underflown
+4. Calculate offset according to link above
+5. Overwrite Owner
+
+
+0000000000000000000000012C17A5f47FF94Be930E74483BDa8FE0D3616AA1E
+
+ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+
+b10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7

