@@ -1,0 +1,5 @@
+Problem:
+Price is calculated incorrectly
+
+Solution:
+Just swap back and forth until the price is low enough that you can get all of one token. 

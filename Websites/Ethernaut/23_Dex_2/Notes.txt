@@ -1,0 +1,9 @@
+
+Problem:
+Doesn't check if we try swapping the 2 tokens in the dex, we can create our own tokens and swap them for the ones in the exchange.
+
+Solution.
+
+1. Create our own 2 swappable tokens.
+2. Give 100 of each to the exchange & approve
+3. Swap Swap the real tokens in the exchange for our created ones.
