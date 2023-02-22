@@ -15,29 +15,9 @@ MaxBalance = Level Adress (Probably because of the proxy overwriting using pendi
 
 https://medium.com/@jeremythen16/solidity-delegatecall-usage-and-pitfalls-5c37eaa5bd5d
 
-# Possible Attack paths:
-
-## Their Proxy -> Wallet.setMaxBalance() -> Overwrite Admin
-
-Problem is the proxy has a balance which will cause the require to fail
-
-## Attack plan: 
-1. Create our own contract where the 2nd slot is 0
-2. Delegate to the wallet for init
-3. Wallet checks out 2nd slot instead of its own and lets us call init
-4. Call .whitelist() and add yourself
-
-5. Proxy delegate to setMaxBalance -> overwrite admin using the function
-
-5. Call to .multicall() -> multicall delegate to proxy -> Proxy overwrite maxBalance using proposeNewAdmin
-6. Set Max Balance to 0 without a delegate
-7. Become owner of PuzzleWallet using init
-
-
-
 Attack
-1. Maxbalance is still 0 so we can overwrite owner with ourself
+1. Add us to the pendingAdmin which the wallet will see as the owner
 2. Whitelist ourself
-3. Set Maxbalance to ourself
-4. propose ourself as new admin
-4. Proxy, then multicall to approvenewadmin
+3. Do a nested multicall so we can deposit 2x (could also be 10000x)
+4. Drain the proxy.
+4. Overwrite the owner with ourself
