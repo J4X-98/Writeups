@@ -74,3 +74,5 @@ contract attack {
     }
 }
 ```
+
+after this you can just directly call the hacked function.
