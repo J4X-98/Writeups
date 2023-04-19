@@ -3,7 +3,6 @@
 - Gold NFT
 - Slot Puzzle
 - Moloch’s Vault
-- Donate
 - WETH-11
 - Panda Token
 - Gate
@@ -12,6 +11,7 @@
 - Collatz Puzzle
 
 ## Solved:
+- Donate
 - True XOR
 - D31eg4t3
 - safeNFT
