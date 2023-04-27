@@ -1,4 +1,5 @@
 ## Open:
+- Invest Pool
 - PseudoRandom
 - Gold NFT
 - Slot Puzzle
