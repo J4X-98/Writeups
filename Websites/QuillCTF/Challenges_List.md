@@ -12,6 +12,8 @@
 - Collatz Puzzle
 
 ## Solved:
+- Private Flag
+- Access Denied
 - Donate
 - True XOR
 - D31eg4t3
