@@ -1,4 +1,5 @@
 ## Open:
+- Voting Machine
 - Invest Pool
 - PseudoRandom
 - Gold NFT
@@ -12,6 +13,8 @@
 - Collatz Puzzle
 
 ## Solved:
+- Private Club
+- Predictable NFT
 - Private Flag
 - Access Denied
 - Donate

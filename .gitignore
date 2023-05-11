@@ -4,3 +4,5 @@ package.json
 lib
 out
 cache
+script
+foundry.toml
