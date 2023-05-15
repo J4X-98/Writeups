@@ -1,0 +1,38 @@
+// Decompiled by library.dedaub.com
+// 2023.05.12 19:25 UTC
+// Compiled using the solidity compiler version 0.8.17
+
+
+// Data structures and variables inferred from the use of storage instructions
+uint256 _win; // STORAGE[0x0] bytes 0 to 0
+uint256 stor_0_1_1; // STORAGE[0x0] bytes 1 to 1
+
+function () public payable { 
+    revert();
+}
+
+function 0x3c5269d8() public payable { 
+    _win = 1;
+}
+
+function 0x459a2790() public payable { 
+    return stor_0_1_1;
+}
+
+function win() public payable { 
+    v0 = v1 = _win;
+    if (v1) {
+        v0 = stor_0_1_1;
+    }
+    return bool(v0);
+}
+
+function 0x75ec067a() public payable { 
+    if (_win) {
+        stor_0_1_1 = 1;
+    }
+}
+
+function 0xe9a37061() public payable { 
+    return _win;
+}

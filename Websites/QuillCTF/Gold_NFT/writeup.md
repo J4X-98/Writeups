@@ -68,4 +68,16 @@ I then tried to clean up the code so it's better understandable.
 
 ```
 
+function read(bytes32 _currency) payable
+{
+  return bool(storage[_currency]);
+}
+  
+function set(bytes32 _param1, bool _param2) payable
+{
+  require(caller == owner);
+  storage[_param1] = _param2;
+}
 ```
+
+So the read functions checks if a certain storage slot has been set to something else then 0. So i looked at the contract in etherscan. There wwe can see that the storage slot at 0x89cc2652e31add2270f7ce9c3c69ce903558b7a053665c92e066089aece0ccb6 was set to 1. 
