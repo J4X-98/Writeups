@@ -1,8 +1,6 @@
 ## Open:
-- Arbitrage
 - Invest Pool
 - PseudoRandom
-- Gold NFT
 - Slot Puzzle
 - Moloch’s Vault
 - WETH-11
@@ -13,6 +11,8 @@
 - Collatz Puzzle
 
 ## Solved:
+- Gold NFT
+- Arbitrage
 - Voting Machine
 - Private Club
 - Predictable NFT

