@@ -77,4 +77,5 @@ for path in possible_paths:
 
 ```
 
-I found a possible path[Btoken -> Atoken -> Ctoken -> Btoken] with this and ran it which worked.vTHe implementation can be found in the POC.sol file.
+I found a possible path[Btoken -> Atoken -> Ctoken -> Btoken] with this and ran it which worked.
+The implementation can be found in the POC.sol file.
