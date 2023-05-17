@@ -7,10 +7,10 @@
 - Panda Token
 - Gate
 - WETH-10
-- Pelusa
 - Collatz Puzzle
 
 ## Solved:
+- Pelusa
 - Gold NFT
 - Arbitrage
 - Voting Machine
