@@ -6,7 +6,7 @@
 - WETH-11
 - Panda Token
 - Gate
-- WETH10
+- WETH-10
 - Pelusa
 - Collatz Puzzle
 
