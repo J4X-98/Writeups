@@ -4,7 +4,7 @@
 
 We get a contract 
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity 0.8.7;
@@ -60,7 +60,7 @@ In this case the vulnerability is pretty easy to spot. We should check if the am
 
 We should intentionally be protected against this by setting the deposit function to VIPOnly. nevertheless we can force feed solidity contracts using selfdestruct. I just used a simple template contract for force feeding:
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
 

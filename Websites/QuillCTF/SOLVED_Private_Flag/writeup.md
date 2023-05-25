@@ -4,7 +4,7 @@
 
 We get the follwing contract, and want to retrieve the flag:
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -29,7 +29,7 @@ contract private_flag{
 
 I could have nicely calculated where exactly the flag is, or do it the dirty way and just retrieve the first 10 storage slots and look for something that looks like ascii (which is exactly what i did);
 
-```
+```js
 // Description:
 // A short script that lets you read out the storage of a smart contract
 

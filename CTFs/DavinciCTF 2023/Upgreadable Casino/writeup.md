@@ -4,7 +4,7 @@
 
 We get 2 contracts. A casion contract that can be used to gamble using tokens.
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.7.6;
@@ -99,7 +99,7 @@ contract Casino {
 
 In addition we also get a proxy contract that is used for forwarding our calls to the casino.
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.7.6;
@@ -238,7 +238,7 @@ In the playTokens() function all token ammounts we want to add together are adde
 
 We can use both of these to exploit. We can use the 4th variable (poker) together with the overflow to be able to overwrite arbitrary parts of the address without needing to own any tokens at all. Below you can see my attack contract:
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.7.6;

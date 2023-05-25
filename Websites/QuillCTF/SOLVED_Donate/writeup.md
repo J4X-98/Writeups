@@ -4,7 +4,7 @@
 
 We are provided a contract:
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8;

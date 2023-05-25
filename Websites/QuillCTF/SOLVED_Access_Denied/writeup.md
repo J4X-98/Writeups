@@ -4,7 +4,7 @@
 
 We get contract: 
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -62,7 +62,7 @@ There are 2 ways to solve this challenge:
 
 You can just read out the private flag variable using web3.js
 
-```
+```js
 // Description:
 // A short script that lets you read out the storage of a smart contract
 
@@ -97,7 +97,7 @@ running this yields us the flag "flag{7h3_Prof3ss0r}"
 
 The contract checks if we are a contract and if we have a codesize of 0. We can just circumvent this by doing everythign in the constructor. I also set the flag to private so other people can't directly call my contract and get a flag.
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 

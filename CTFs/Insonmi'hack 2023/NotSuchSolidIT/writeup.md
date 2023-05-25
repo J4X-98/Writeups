@@ -6,7 +6,7 @@ We get one challenge contract and its address, and want to get all value of it o
 
 ### Challenge.sol
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.18;
 contract Challenge {
@@ -40,7 +40,7 @@ contract Challenge {
 
 We also get the setup contract that was used ot deploy the chall, as well as it's address.
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.1;
 import "./Challenge.sol";
@@ -77,7 +77,7 @@ contract Setup {
 Here the contract by itself is pretty ok. The vulnerability lies in the setup contract being able to execute functions of the challenge contract, using the isAlive() function. As the withdrawAll() only checks for the msg.sender being the owner, which the setup contract is, it can be used to call the function via the setup contract. Below this you can see an example script that exploits this vulnerability.
 
 
-```
+```js
 const Web3 = require('web3');
 const setupContractAbi = require('./abi_setup.json');
 

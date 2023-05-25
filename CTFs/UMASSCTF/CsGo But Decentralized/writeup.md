@@ -7,7 +7,7 @@ We receive a netcat connection and a few .sol files. The challenge uses the para
 The first one is the setup contract. It deploys the challenge contract and is solved if all 20 enemies are dead.
 
 Setup
-```
+```solidity
 pragma solidity ^0.8.13;
 
 import "./Chal.sol";
@@ -33,7 +33,7 @@ contract Setup {
 
 The next one is the most important, the challenge. We can see that we have 20 enemies and mappings for guns & bullets. We also have functions for grabbing a gun and shooting enemies.
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 
 // Challenge author: Shanyu Thibaut JUNEJA (sin), UMass Cyber-Security Club.
@@ -89,7 +89,7 @@ contract Chal {
 
 The next contract we have is the Enemy. It seems to need to be shot 20x to be dead.
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 //
 // Challenge author: Shanyu Thibaut JUNEJA (sin), UMass Cyber-Security Club.
@@ -114,7 +114,7 @@ contract Enemy is Ownable {
 
 The last one we get is the player interface. It seems like we need to implement the handleRecoil() function ourselves.
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 //
 // Challenge author: Shanyu Thibaut JUNEJA (sin), UMass Cyber-Security Club.
@@ -134,7 +134,7 @@ The challenge shows a very basic reentrancy vulnerability. We can exploit the ha
 
 I first implemented a VulnPlayer contract which abuses the Reentrancy attack to be able to kill one enemy (could also be more)
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 //
 // Challenge author: Shanyu Thibaut JUNEJA (sin), UMass Cyber-Security Club.
@@ -175,7 +175,7 @@ contract VulnPlayer {
 
 I first tried just creating one vuln player and make him kill all the enemies but i was getting into issues with gas usage, so i jsut resorted to creating one player per enemy. I used a deployer contract that when you call the function kill5Enemies() kills 5 enemies at a time (also helpful for debugging and checking if it worked, before burning a lot of gas). Then i just deployed this Deployer contract and called the kill5Enemies() function 4x, which made the isSolved in the setup contract switch to true.
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 //
 // Challenge author: Shanyu Thibaut JUNEJA (sin), UMass Cyber-Security Club.

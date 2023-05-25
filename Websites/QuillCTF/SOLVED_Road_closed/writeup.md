@@ -4,7 +4,7 @@
 
 We get one contract which we need to exploit
 
-```
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity 0.8.7;

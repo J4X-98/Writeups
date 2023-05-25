@@ -6,7 +6,7 @@
 
 We get one challenge contract, and want to get all value of it out of the contract. We also receive a address (including private key) on the chain which we can use to sign transactions.
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.1;
 
@@ -26,7 +26,7 @@ contract Challenge is Ownable{
 
 We also get the setup contract, as well as it's address.
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.1;
 import "./Challenge.sol";
@@ -53,7 +53,7 @@ The challenge description mentions that the blockchain was deployed using hardha
 
 First we want to get the address where our challenge contract was deployed. This can be done by retrieiving storage(0) of the setup contract.
 
-```
+```js
 const Web3 = require('web3');
 
 // create a new instance of the web3 object
@@ -74,7 +74,7 @@ web3.eth.getStorageAt(contractAddress, 0, (error, result) => {
 
 Then it's also helpful if we can check for what the owner of the challenge currently is to be able to debug.
 
-```
+```js
 const Web3 = require('web3');
 
 // create a new instance of the web3 object
@@ -95,7 +95,7 @@ web3.eth.getStorageAt(contractAddress, 0, (error, result) => {
 
 After some groundwork we can start exploiting. The idea I had, which also was the exploit in the end, was that we could leverage some hardhat functionality to change the blockchain data as we want. I used the setStorageAt() function to just overwrite the owner of the challenge contract, so we can easily drain it.
 
-```
+```js
 const { ethers } = require('hardhat');
 
 const provider = new ethers.providers.JsonRpcProvider('https://blockchainindev.insomnihack.ch:32915');
@@ -120,7 +120,7 @@ const setStorageAt = async (address, index, value) => {
 
 When we have overwritten the owner we can easily drain it. Script below:
 
-```
+```js
 const Web3 = require('web3');
 const abi = require('./abi.json');
 

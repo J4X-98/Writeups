@@ -4,7 +4,7 @@
 
 We once again get only one contract:
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.7;
 
@@ -38,11 +38,7 @@ Our goal is to find the keccak256 hash of aliceHash and bobHash.
 
 ## Solution
 
-Here we will need a bit more than just calling dunctions in remix. It's nevrtheless not that hard. First we will use a simple web3.js script for reading out the storage of the contract.
-
-```
-
-```
+Here we will need a bit more than just calling functions in remix. It's nevrtheless not that hard. First we will use a simple web3.js script for reading out the storage of the contract. I used my example script (https://github.com/J4X-98/SolidityCTFToolkit/blob/main/helpers/web3.js/reader.js)
 
 This yields us the (sorted) output
 

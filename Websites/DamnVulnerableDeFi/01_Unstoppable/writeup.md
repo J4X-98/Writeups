@@ -137,11 +137,29 @@ contract UnstoppableVault is IERC3156FlashLender, ReentrancyGuard, Owned, ERC462
 }
 ```
 
+## Analysis
+
+The goal is to get the flashLoan() function to revert when another user calls it. In total there are  ways how we could get this to work. I analyzed each of them for possible attack paths:
+
+### amount == 0
+The call reverts if the given amount is 0. This can in our testcase not happen as the user after us passes a non zero amount. 
+
+### asset != _token
+The call would also revert if the passed token is not the asset that the vault handels, but in the testcase the right one is passed, so no exploit there :(
+
+### convertToShares(totalSupply) != totalAssets();
+This checks for the amount of totaly issued shares in the vault being the same as its balance of the token it holds. This is the part that we'll exploit in the next step.
+
+### safeTransfer(borrower) reverts && receiver.onFlashLoan() != keccak256("IERC3156FlashBorrower.onFlashLoan") && safeTransferFrom() reverts
+This should not happen as the safeTransfer & onFlashLoan & safeTransferFrom() is correctly implemented in the receiver that the other user will use.
+
+### safeTransfer(fee) reverts.
+THis could happen if we are able to change the fee receiver (not possible in this case)
+
 ## Solution
+We can achieve this by triggering the revert in this code snippet:
 
-The goal is to get the flashLoan() function to revert when another user calls it. We can achieve this by triggering the revert in this code snippet:
-
-```
+```solidity
 uint256 balanceBefore = totalAssets();
 
 if (convertToShares(totalSupply) != balanceBefore) revert InvalidBalance(); // enforce ERC4626 requirement

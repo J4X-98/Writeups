@@ -4,7 +4,7 @@
 
 We receive the contract:
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -41,7 +41,7 @@ and our goal is to mint more than 10 NFTs.
 
 First we want to find out what the PassManager really does. So i took a look at the bytecode and decompile it using Paleoramix (the one included in etherscan). Then we get back:
 
-```
+```solidity
 # Palkeoramix decompiler. 
 
 def read(bytes32 _currency) payable: 
@@ -66,8 +66,7 @@ def set(bytes32 _param1, bool _param2) payable:
 
 I then tried to clean up the code so it's better understandable.
 
-```
-
+```solidity
 function read(bytes32 _currency) payable
 {
   return bool(storage[_currency]);
@@ -84,7 +83,7 @@ So the read functions checks if a certain storage slot has been set to something
 
 Then i wrote a attack script that exploits the reentrancy attack in _safeMint. The case is that with _safeMint we have to implement the on onERC721Received from which we can reenter. Then we just reenter until we got our 10 NFTs
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.0;
