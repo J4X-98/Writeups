@@ -4,7 +4,7 @@
 
 We get one challenge contract and its address, and want to get all value of it out of the contract. We also receive a account (including private key) on the chain which we can use to sign transactions.
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.1;
 contract Challenge {
@@ -46,7 +46,7 @@ contract Challenge {
 as the mapping is intialized to 0, the init() function is not called in the constructor. So you can just call this function yourself, overwrite the owner and drain the contract. Example script can be found below.
 
 
-```
+```js
 const Web3 = require('web3');
 const abi = require('./abi.json');
 

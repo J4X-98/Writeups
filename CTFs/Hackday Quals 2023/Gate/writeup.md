@@ -4,7 +4,7 @@
 
 The challenge is centered around a contract called gate. The goal is to be able to pass the letMeIn function without reverting.
 
-```
+```solidity
 contract Gate {
     address public idManager;
     uint8[] private password;
@@ -40,7 +40,7 @@ contract Gate {
 
 There also is an additional contract for the identity manager which should check if you are registered and also priviledged.
 
-```
+```solidity
 // SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.17;
@@ -102,7 +102,7 @@ This one can also be passed without any issues, because the gate contract doesn'
 This is the only part of the chall that requires some skill. The password is set to private, but as we all know everything on the blockchain is public. Your contract can't directly access it, but it can be retrieved using the web3.js library. I have added a example script below.
 
 
-```
+```js
 // Import the web3.js library
 const Web3 = require('web3');
 

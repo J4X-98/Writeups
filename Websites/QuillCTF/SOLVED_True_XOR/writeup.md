@@ -5,7 +5,7 @@
 
 We get one contract:
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -34,7 +34,7 @@ The view specification makes it harder for us, as we could otherwise just set a 
 
 I just used the gasleft() option to differ between the 2 calls. If you would want to do it the clean way you could run the call and debug how much gas is left after the 1st and 2nd attempt. I thought that i have a 50/50 chance that one is even and one is not even. To my luck that worked and saved me the time of reverse engineering. Following this you can see my exploit contract:
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 

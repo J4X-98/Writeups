@@ -6,7 +6,7 @@
 
 We get one contract, and want to get all value of it out of the contract. We also receive a address (including private key) on the chain which we can use to sign transactions.
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.1;
 
@@ -26,7 +26,7 @@ contract Intro2Solidity_writeupChallenge{
 
 This one is pretty easy. They forgot to set the permissions correctly and anyone can just call withdraw() and get all the money. So we will just do this. Below this you can see a script that automatically connects via RPC and does this.
 
-```
+```js
 const Web3 = require('web3');
 const abi = require('./abi.json');
 

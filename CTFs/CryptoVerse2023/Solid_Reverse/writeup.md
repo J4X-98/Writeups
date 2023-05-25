@@ -4,7 +4,7 @@
 
 We are presented with one Solidity contract:
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -69,7 +69,7 @@ This is also pretty straight forward, we cast our 16 byte key to 8bytes and 4 by
 
 Now we get to use the first magic function:
 
-```
+```solidity
 function magic1(uint x, uint n) public pure returns (uint) {
     // Something magic
     uint m = (1 << n) - 1;
@@ -85,7 +85,7 @@ What this does for us is generate a value that is n bits long and all zeros, and
 
 Now we use our second magic function:
 
-```
+```solidity
 function magic2(uint x) public pure returns (uint) {
     // Something else magic
     uint i = 0;

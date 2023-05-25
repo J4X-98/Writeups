@@ -4,7 +4,7 @@
 
 We get one contract for a NFT:
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 
 pragma solidity 0.8.7;
@@ -38,7 +38,7 @@ The goal is to claim multiple NFTs for the price of one
 
 Here we have a very simple reentrancy attack. THe _safeMint functionality calls back to our contract, which in the end lets us call back multiple times before the canClaim gets reset. We can write a simple exploit contract to exploit the vulnerability:
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 
 pragma solidity 0.8.7;

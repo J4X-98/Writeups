@@ -4,7 +4,7 @@
 
 We get one contract of a ERC20 token, and want to get all of it out of the contract.
 
-```
+```solidity
 // SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.17;
@@ -54,7 +54,7 @@ contract Diamond is ERC20("Diamond", "DMD") {
 
 The vulnerability is the use of tx origin. Through the faucet, which has the same address as the owner we can forward the message to the recovery() function and set ourself to the manager. I used this contract to do that, by deploying it and then calling the faucet with its address.
 
-```
+```solidity
 // SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.17;
@@ -78,7 +78,7 @@ contract restter
 
 Now that you're the manager you can call setExtension() to set it to your own extension. I deployed the following contract and then set the extension to it's address.
 
-```
+```solidity
 // SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.17;
@@ -103,7 +103,7 @@ contract extension is ERC20("Diamond", "DMD")
 
 Now you have to call that extension through the callExtension() function. You could've probably also done that directly from your address, but i wrote a small contract that does it for you.
 
-```
+```solidity
 // SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.17;
@@ -125,7 +125,7 @@ contract redeemsOverwriter
 
 Now that the max amount of free redeems is super high you can start draining the contract. As it only checks if your address has already requested one free redeem, you can just create arbitrary contracts and send the money back to you. I created one small contract that requests a free redeem and then sends it back to you.
 
-```
+```solidity
 // SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.17;
@@ -146,7 +146,7 @@ contract drainer
 
 As i would have needed to call this script 200 times i wrote a big drainer that just does it 20x as fast.
 
-```
+```solidity
 // SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.17;

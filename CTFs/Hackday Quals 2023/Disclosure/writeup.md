@@ -4,7 +4,7 @@
 
 There are 2 contracts. The first one is the Filesmanager, which is used for savinf file URIs as NFTs on the blockchain.
 
-```
+```solidity
 // SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.17;
@@ -36,7 +36,7 @@ contract FilesManager is ERC721URIStorage {
 
 THe second contract is the FilesManagerDeployer which you can use to deploy new FilesManager contracts. We get this contracts address in the challenge. 
 
-```
+```solidity
 // SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.17;
@@ -56,7 +56,7 @@ The goal of this challenge is to retrieve the files that were minted in a filesm
 
 Throughout i used the same scipt multiple times and adapted it according to the address i was investigating. The script is used to find transactions goin from/to an address.
 
-```
+```js
 const Web3 = require('web3');
 const web3 = new Web3('http://sie2op7ohko.hackday.fr:8545');
 // const ADDRESS = '0xbDb0eE8217d0A611419Af60b8471EE4183E1101a'; Old

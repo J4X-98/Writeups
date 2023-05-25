@@ -4,7 +4,7 @@
 
 We get one contract which we need to exploit
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
@@ -54,7 +54,7 @@ First you need to get the owner. You can do this by calculating the value from t
 
 Then i wrote a simple contract called Shooter. This contract calls the passTheBall functionality if his own address to mod 100 is 10 and sets himself as the player. It does this during the constructor so the require in pelusa doesn't fail, which checks the extcodesize. In addition this contract implements the IGame interface and returns the owner in case of a call to getBallPossesion. It also has a function for handOfGod() which sets goals to 2 and returns the wanted value.
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
@@ -91,7 +91,7 @@ contract Shooter
 
 Then i wrote the exploit contract which produces shooters until it gets a valid address. Afterwards it calls the shoot function.
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 

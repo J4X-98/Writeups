@@ -4,7 +4,7 @@
 
 We receive a address on goerli and a poc snippet:
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^ 0.8.19;
 
@@ -49,7 +49,7 @@ contract PredictableNFTTest is Test {
 
 ## Solution
 As we don't have any source code for this chall i first started by decompiling the bytecode of the given address. I used Palkeoramix decompiler (included in Etherscan) for this, which gave me the pseudocode:
-```
+```solidity
 # Palkeoramix decompiler. 
 
 def storage:
@@ -88,7 +88,7 @@ def mint() payable:
 
 As this code couln't be directly run like this i cleaned it up a bit:
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^ 0.8.19;
 
@@ -129,7 +129,7 @@ So it's pretty easy. You can just use the same function as the challenge uses (s
 
 ## POC
 
-```
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^ 0.8.19;
 

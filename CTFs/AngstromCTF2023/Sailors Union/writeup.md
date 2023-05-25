@@ -6,7 +6,7 @@ Authors: J4X & PaideaDilemma
 
 We get a solana smart contract:
 
-```
+```rs
 use borsh::{BorshDeserialize, BorshSerialize};
 use solana_program::{
     account_info::{next_account_info, AccountInfo},
@@ -275,7 +275,7 @@ pub fn register_member(
 
 As well as a setup/server contract:
 
-```
+```rs
 use borsh::BorshSerialize;
 
 use poc_framework_osec::{
@@ -451,7 +451,7 @@ In this case we have two problems inside the strike_pay function.
 
 First we have a problem of account confusion. The problem is that in the strike_pay function we don't check if the SailorUnion that we get passed is of type SailorUnion. So we can pass anything that could be interpreted as a sailor union, is owned/created by the program and writable. In our case we can for example use the Registration which is pretty helpfull. We have the original struct of Sailor Union:
 
-```
+```rs
 pub struct SailorUnion {
     available_funds: u64,
     authority: [u8; 32],
@@ -460,7 +460,7 @@ pub struct SailorUnion {
 
 And we also have the Struct for registration:
 
-```
+```rs
 pub struct Registration {
     balance: i64,
     member: [u8; 32],
@@ -484,7 +484,7 @@ So we build a rust project that used the same dependencies as the chall and incl
 
 
 **processor.rs**
-```
+```rs
 use borsh::{BorshDeserialize, BorshSerialize};
 
 use solana_program::{
@@ -542,7 +542,7 @@ pub fn process_instruction(
 ```
 
 **lib.rs**
-```
+```rs
 use solana_program::entrypoint;
 
 pub mod processor;

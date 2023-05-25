@@ -9,7 +9,7 @@ We were provided token contracts for the challenges 02 and 03 and no contract fo
 
 My solution was probably unintented. The developers "forgot" to restrict the transferFrom() function in the WMEL token:
 
-```
+```solidity
 function transferFrom(address src, address dst, uint wad)
 public
 returns (bool)
