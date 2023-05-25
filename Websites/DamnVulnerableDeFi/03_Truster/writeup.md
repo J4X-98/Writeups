@@ -1,4 +1,4 @@
-# 02_NaiveReceiver
+# 03_Truster
 
 ## Challenge
 
@@ -60,7 +60,7 @@ We can achieve this by exploiting that the pool verifies that a loan was payed b
 
 What we can do is give the loan to the pool itself and then call the token.approve() function to approve ourself for spending all the tokens money. Then we return it and the balance is still the same. The problem is that now we are able to spend all the pools money without it checking. We now send all its money to the user and are done. I implemented a small attack contract that does that, as i am not a big hardhat enjoyer:
 
-```soldity
+```solidity
 // SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.0;
