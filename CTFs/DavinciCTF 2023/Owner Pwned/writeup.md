@@ -42,6 +42,6 @@ contract Challenge1 {
 ```
 ## Solution
 
-The solution is super easy. They used the public function initWallet() instead of a constructor. We can use this fucntion to overwrite the variable me. Now we can just call migrate with our own address as the "to" parameter and receive all the money.
+The solution is super easy. They used the public function initWallet() instead of a constructor. We can use this function to overwrite the variable me. Now we can just call migrate with our own address as the "to" parameter and receive all the money.
 
 --> Flag
