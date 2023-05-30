@@ -1,3 +1,9 @@
+pragma solidity ^0.8.19;
+
+import "forge-std/Test.sol";
+import "../src/WETH10.sol";
+import "../src/Attack.sol";
+
 contract Weth10Test is Test {
     WETH10 public weth;
     address owner;
@@ -14,10 +20,11 @@ contract Weth10Test is Test {
     function testHack() public {
         assertEq(address(weth).balance, 10 ether, "weth contract should have 10 ether");
 
-
         vm.startPrank(bob);
 
         // hack time!
+        Attack atk = new Attack(payable(address(weth)));
+        atk.attack{value: 1 ether}();
 
         vm.stopPrank();
         assertEq(address(weth).balance, 0, "empty weth contract");
