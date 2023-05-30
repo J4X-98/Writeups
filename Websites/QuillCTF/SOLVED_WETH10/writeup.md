@@ -4,7 +4,7 @@
 
 We are provided a contract:
 
-```
+```solidity
 pragma solidity ^0.8.0;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -47,7 +47,7 @@ contract WETH10 is ERC20("Messi Wrapped Ether", "WETH10"), ReentrancyGuard {
 
 and a poc setup:
 
-```
+```solidity
 contract Weth10Test is Test {
     WETH10 public weth;
     address owner;

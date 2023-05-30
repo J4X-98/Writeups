@@ -6,10 +6,10 @@
 - WETH-11
 - Panda Token
 - Gate
-- WETH-10
 - Collatz Puzzle
 
 ## Solved:
+- WETH-10
 - Pelusa
 - Gold NFT
 - Arbitrage
