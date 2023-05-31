@@ -1,4 +1,4 @@
-# WETH 11
+# WETH11
 
 ## Challenge
 
