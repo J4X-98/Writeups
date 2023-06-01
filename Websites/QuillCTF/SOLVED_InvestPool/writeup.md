@@ -11,7 +11,7 @@ Your objective is to have a greater token balance than your initial balance. You
 We get 2 contracts:
 
 ### InvestPool
-```
+```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
@@ -87,7 +87,7 @@ contract InvestPool {
 
 ### PoolToken
 
-```
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -107,7 +107,7 @@ Your objective is to have a greater token balance than your initial balance. We 
 
 I started by trying to get the password. For this i just used my template reader (https://github.com/J4X-98/SolidityCTFToolkit/blob/main/web3.js/reader.js) and adapted the script to the contract:
 
-```
+```js
 // Description:
 // A short script that lets you read out the storage of a smart contract
 
