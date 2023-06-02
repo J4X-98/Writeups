@@ -7,3 +7,4 @@ cache
 script
 foundry.toml
 Websites/DamnVulnerableDeFi/src
+.vscode
