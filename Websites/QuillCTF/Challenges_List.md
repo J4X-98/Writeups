@@ -1,5 +1,5 @@
 ## Open:
-- Invest Pool
+
 - PseudoRandom
 - Slot Puzzle
 - Moloch’s Vault
@@ -9,6 +9,8 @@
 - Collatz Puzzle
 
 ## Solved:
+- NFTBank
+- Invest Pool
 - WETH-10
 - Pelusa
 - Gold NFT
