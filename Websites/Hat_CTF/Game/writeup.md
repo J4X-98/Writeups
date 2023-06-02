@@ -10,46 +10,40 @@ Your mission is to obtain the flag: i.e. game.flagHolder() should return an addr
 ## Solution
 
 ### Setup
-
-In the original Version the contract was deployed on rinkeby and you should solve the challenge by forking Rinkeby. Unfortunately RInkeby is not really in use anymore so i decided on developing my own setup for the challenge using foundry.
-
+In the original Version, the contract was deployed on Rinkeby and you should solve the challenge by forking Rinkeby. Unfortunately, Rinkeby is not really in use anymore so I decided on developing my setup for the challenge using foundry. It can be found in the repo as POC_raw.sol. 
 
 ### Analysis
 
 #### Bad Randomness
+The first vulnerability I found is that you can exactly predict the stats of your mon, as the randomness is only derived from block.number and some other values that we know. So we can just keep increasing the block.number by waiting until we get the perfect values, which we can calculate ourselves.
 
-THe first vulnerability i found is that you can exactly predict the stats of your mon, as the randomness is only derived from block.number and some other values that we know.
-
-
-#### Inefficient indexOf
-The loop in indexof doesn't break when it finds the id inside the decks array.
+#### Inefficient indexInDeck()
+The loop in indexInDeck doesn't break when it finds the id inside the decks array. This is not that much of a problem as there are only 3 indexes. The bigger problem is, that in case of finding nothing it returns 0, which could also be a valid index.
 
 #### ForSale not removed
-The true vlue in forSale() stays set after the swap and doesn't get reset to 0.
-
+The true value in forSale() stays set after the swap and doesn't get reset to 0. So one has to always trade his traded card after swapping, as this can't even be reset manually.
 
 #### Reentrancy in swap()
-There is a possible reentrancy attack introduced by the _safeMint() functions in the swap() function. 
+There is a possible reentrancy attack introduced by the _safeMint() functions in the swap() function. Both _safeMint() functions allow for reentrancy, as there is no reentrancyGuard deployed. 
 
 
 ### Attacks
+At first, I thought just generating 3 supermons would be enough to solve this chal. Unfortunately in this case you still lose all the fights, as you need to have a higher speed value. 
 
-First i thought just generating myself 3 supermons would be enough to solve this chal. Unfortunately in this case you still lose all the fights, as you need to have a higher speed value. 
+My next idea was to exploit the potential reentrancy in _safeMint() to loan myself 6 NFTS and be able to just lose 3 and still have a bigger balance than the other one. The "flash loan" exploiting the 2 _safeTransfers did actually work pretty well. Unfortunately, I ran into the issue that my first 3 NFTs were burned during the fight and I was not able to return the first 3 I used to swap for the following ones.
 
-My next idea was to exploit the potential reentrancy in _safeMint() to loan myself 6 NFTS and be able to just lose 3 and still have a bigger balance than the other one. The "flashloan" exploiting the 2 _safeTransfers did actually work pretty good. Unfortunately i ran into the issue that my first 3 NFTs were burned during the fight and i was not able to return the first 3 i used to swap for the following ones.
-
-Further improving upon my reentrancy plan i had the idea, that as the forSale value stays set after the fight, we could swap our newly receive NFTs with the 0x0 address to get the right ids back using the commands:
+Further improving upon my reentrancy plan I had the idea, that as the forSale value stays set after the fight, we could swap our newly receive NFTs with the 0x0 address to get the right ids back using the commands:
 ```solidity
 game.swap(address(0), 12, 3);
 game.swap(address(0), 13, 4);
 game.swap(address(0), 14, 5);
 ```
-Unfortunately this also didn't work as ERC721 includes an assert that reverts in cas of a transfer to the 0 address.
+Unfortunately, this also didn't work as ERC721 includes an assert that reverts in case of a transfer to the 0 address.
 
 ### Exploit
-Finally I got the idea of how to solve the challenge. I could exploit the reentrancy between both safeMint functions, to transfer all my nfts out (knowing that i will get one back for them later) and then as soon as all 3 are gone call join() again to get 3 new ones. As 3 would still not be enough, because the win function only changes if we have more nfts in our balance than the flagholder(3 get destroyed during the fight so we then also have 3 left), we need to do this 2 times to have more left, even after losing 3. 
+Finally, I got an idea of how to solve the challenge. I could exploit the reentrancy between both safeMint functions, to transfer all my NFTs out (knowing that I will get one back for them later), and then as soon as all 3 are gone call join() again to get 3 new ones. As 3 would still not be enough, because the win function only changes if we have more NFTs in our balance than the flag holder (3 get destroyed during the fight so we then also have 3 left), we need to do this 2 times to have more left, even after losing 3. 
 
-To exploit this I developed 2 contracts. A feeder account which is used for storing our nfts while we want to get new ones and an Attacker contract to facilitate the whole attack and claim the flag in the end.
+To exploit this I developed 2 contracts. A feeder account is used for storing our NFTs while we want to get new ones and an Attacker contract to facilitate the whole attack and claim the flag in the end.
 
 Feeder:
 ```solidity
