@@ -249,7 +249,7 @@ So we now wave found the 4 indexes that were used [183, 228, 251,3].
 
 Now we still need to find our bytes. I retrieved these by starting from the begin with a bytevector of length 4 and calculate them in each step. As we know that they are the xor of the last byte of tmp and the index we can now easily calculate them.
 
-```
+```txt
 tmp                    = 0xffffffff
 byte[0] = 0xB7 ^ 0xFF  = 0x48           //index[0] = 0xB7
 shifted_tmp            = 0x00FFFFFF
