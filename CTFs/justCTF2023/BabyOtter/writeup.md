@@ -156,7 +156,7 @@ The last part was the hashing function called hh(). This one was a bit more comp
 1. Fetch vector[i]
 2. Get index by xoring the byte with the lsb of tmp
 3. Shift tmp by one byte to the left
-4. Xor tmp with the tale entry at the index
+4. Xor tmp with the table entry at the index
 
 In the end it xord the result with 0xFFFFFFFF and returned it.
 
@@ -207,7 +207,7 @@ if hash(split_bytes(0x4834434b)):
     print("Solution found!")
 ```
 
-So we know that the final tmp must be 1725720156 (0x66DC665C) ^ 0xFFFFFFFF. From there one we can use the first byte of tmp to find out the last index. We know that the lsb of the last tmp must be the lsb of the table entry, as the first byte of the tmp before xoring it to the table always is 00. When we have the whole table entry we can xor it to the result to find out the other 3 bytes of the tmp before the shift.
+So we know that the final tmp must be 1725720156 (0x66DC665C) ^ 0xFFFFFFFF. From there on we can use the first byte of tmp to find out the last index. We know that the lsb of the last tmp must be the lsb of the table entry, as the first byte of the tmp before xoring it to the table always is 00. When we have the whole table entry we can xor it to the result to find out the other 3 bytes of the tmp before the shift.
 
 
 ```txt
