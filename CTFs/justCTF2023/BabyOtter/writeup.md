@@ -102,8 +102,7 @@ Our goal is to make the is_owner function not revert.
 
 
 ## Solution
-
-There are 2 functions inside the challenge. The first one is not depending on any input and will always return the same. It is called gt() and just generates a 256 entry long lookup table of 32bit values. I implemented the exact same functionality in python and ran it to retrieve the lookup table:
+There are 2 functions inside the challenge. The first one is not depending on any input and will always return the same. It is called gt() and just generates a 256-entry long lookup table of 32-bit values. I implemented the same functionality in Python and ran it to retrieve the lookup table:
 
 ```python
 VECTOR_SIZE = 256
@@ -149,18 +148,18 @@ if __name__ == '__main__':
 
 ```
 
-This was pretty easy and, upon running yielded me the table. There also was a entry function which wanted us to pass it a vector of bytes, then ran the function hh() on it and if the output was equal to 1725720156 (0x66DC665C) it set solved to true. So our goal was finding a possible input that yielded this return val.
+This was pretty easy and, upon running yielded me the table. There also was an entry function that wanted us to pass it a vector of bytes, then ran the function hh() on it and if the output was equal to 1725720156 (0x66DC665C) it set solved to true. So our goal was to find a possible input that yielded this return value.
 
 The last part was the hashing function called hh(). This one was a bit more complex as it contained multiple operations. It looped over the vector and can be broken down into the steps:
 
 1. Fetch vector[i]
-2. Get index by xoring the byte with the lsb of tmp
+2. Get index by XORing the byte with the LSB of tmp
 3. Shift tmp by one byte to the left
 4. Xor tmp with the table entry at the index
 
-In the end it xord the result with 0xFFFFFFFF and returned it.
+In the end, it XORd the result with 0xFFFFFFFF and returned it.
 
-I wrote a mockup of it in python that allows us to debug the whole process:
+I wrote a mockup of it in Python that allows us to debug the whole process:
 
 ```py
 
@@ -207,8 +206,7 @@ if hash(split_bytes(0x4834434b)):
     print("Solution found!")
 ```
 
-So we know that the final tmp must be 1725720156 (0x66DC665C) ^ 0xFFFFFFFF. From there on we can use the first byte of tmp to find out the last index. We know that the lsb of the last tmp must be the lsb of the table entry, as the first byte of the tmp before xoring it to the table always is 00. When we have the whole table entry we can xor it to the result to find out the other 3 bytes of the tmp before the shift.
-
+So we know that the final tmp must be 1725720156 (0x66DC665C) ^ 0xFFFFFFFF. From there on we can use the first byte of tmp to find out the last index. We know that the LSB of the last tmp must be the LSB of the table entry, as the first byte of the tmp before XORing it to the table always is 00. When we have the whole table entry we can xor it to the result to find out the other 3 bytes of the tmp before the shift.
 
 ```txt
 Result               = 0x66DC665C
@@ -220,7 +218,7 @@ tmp3                 = 0x002ac819
 tmp3 (before shift)  = 0x2ac819XX //XX unknown
 ```
 
-We have now lost the value of the last byte as this was lost in the shift. Luckily this doesn't matter to us for finding the indexes. So now we move on to the next loop.
+We have now lost the value of the last byte as this was lost in the shift. Luckily this doesn't matter to us in finding the indexes. So now we move on to the next loop.
 
 ```txt
 tmp3                = 0x2ac819XX
@@ -229,7 +227,7 @@ tmp2                = 0x00a732XX
 tmp2 (before shift) = 0xa732XXXX
 ```
 
-We have recovered another index and continue so until we don't have any known values left
+We have recovered another index and continue so until we don't have any known values left.
 
 ```txt
 tmp2                = 0xa732XXXX
@@ -247,7 +245,7 @@ tmp0 (before shift) = 0xXXXXXXXX
 
 So we now wave found the 4 indexes that were used [183, 228, 251,3].
 
-Now we still need to find our bytes. I retrieved these by starting from the begin with a bytevector of length 4 and calculate them in each step. As we know that they are the xor of the last byte of tmp and the index we can now easily calculate them.
+Now we still need to find our bytes. I retrieved these by starting from the beginning with a byte vector of length 4 and calculating them in each step. As we know that they are the xor of the last byte of tmp and the index we can now easily calculate them.
 
 ```txt
 tmp                    = 0xffffffff
@@ -268,7 +266,7 @@ shifted_tmp2           = 0x002ac819
 table[3]               = 0x990951ba
 tmp3                   = 0x992399a3
 ```
-This yields us the bytes [0x48, 0x34, 0x43, 0x4b], which if we put it into the function and send to the host using the provided script solves the chal.
+This yields us the bytes [0x48, 0x34, 0x43, 0x4b], which if we put it into the function and send it to the host using the provided script solves the chal.
 
 ```rs
 module solution::baby_otter_solution {
