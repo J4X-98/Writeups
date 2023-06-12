@@ -11,7 +11,6 @@ contract Hack is Test {
     address bigBoss = makeAddr("bigBoss");
     address hacker = makeAddr("hacker");
     address hacker2 = makeAddr("hacker2");
-    uint blockGasLimit = 120000;
 
     function setUp() public {
         //Deal some money to everyone

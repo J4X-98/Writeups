@@ -2,15 +2,14 @@
 pragma solidity ^0.8.0;
 
 import "../lib/forge-std/src/Test.sol";
-import "../src/Game.sol";
-import "../src/Attacker.sol";
+import "../src/Vault.sol";
+import "../src/ERC4626.sol";
 
 contract Hack is Test {
-    Game game;
+    Vault vault;
 
     address bigBoss = makeAddr("bigBoss");
     address hacker = makeAddr("hacker");
-    address hacker2 = makeAddr("hacker2");
 
     function setUp() public {
         //Deal some money to everyone
@@ -18,24 +17,19 @@ contract Hack is Test {
         vm.deal(hacker, 1 ether);
 
         vm.startPrank(bigBoss);
-        //Deploy the game contract
-        game = new Game();
+        //Deploy the vault contract
+        vault = new Vault();
         vm.stopPrank();
     }
 
     function test_attack() public {
         vm.startPrank(hacker);
 
-        Attacker atk = new Attacker(address(game));
-
-        //get 9 mons
-        atk.getEmAll();
-
-        //fight to make the atk contract the flag holder
-        atk.fightEmAll();
+        //SOLUTION here
 
         vm.stopPrank();
 
-        assertEq(game.flagHolder(), address(atk));
+        //Check if flagHolder is your contract
+        assertEq(game.flagHolder(), 0); //Add your address 
     }
 }
