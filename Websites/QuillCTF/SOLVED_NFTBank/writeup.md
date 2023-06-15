@@ -111,16 +111,15 @@ The NFTContract looked kind of confusing to me in the beginning, but was not tha
 The vulnerability consists of 2 issues.
 
 ### No check for rented NFTs during addNFT() 
-When adding a NFT using addNFT() there are no checks if the NFT is already rent out. So we can just rent out an NFT and then return it to the contract using addNFT() becoming the new owner, as the struct that includes the owner is jsut overwritten.
+When adding a NFT using addNFT() there are no checks if the NFT is already rent out. So we can just rent out an NFT and then return it to the contract using addNFT() becoming the new owner, as the struct that includes the owner is just overwritten.
 
 ### No check for multiple consecutive refunds
 
 When we are the owner we can refund ourselfes and then call getBackNft() multiple times. 
 
-
 ### Exploit 
 
-We can use both of those vulnerabilities by making ourself the owner of the NFT using addNFT() and getting the NFT back that way after the reutn, and using the multiple refunds to get back all our money. I implemented this in the POC like this:
+We can use both of those vulnerabilities by making ourself the owner of the NFT using addNFT() and getting the NFT back that way after the return, and using the multiple refunds to get back all our money. I implemented this in the POC like this:
 
 ```solidity
 vm.startPrank(attacker);
