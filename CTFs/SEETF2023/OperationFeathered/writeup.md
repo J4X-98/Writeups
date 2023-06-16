@@ -7,7 +7,7 @@ We receive the setup as well as the pigeon contract.
 
 ## Analysis
 
-- contract for managing pigeons of differet tiers (junio, associate, senior)
+- contract for managing pigeons of different tiers (junio, associate, senior)
 - pigeons have to fulfill tasks to increase their points
 
 ### Functions
@@ -24,7 +24,7 @@ functionality:
 - hashes code and name together to generate codeName (reproducible)
 - sets juniorPigeon at the generated codename to the address of the msg sender
 - sets isPigeon[msg.sender] to true
-- sets codeToName[code][name] to true (which will trigger the revert if we call this fun again with the same val)
+- sets codeToName[code][name] to true (which will trigger the revert if we call this fun again with the same value)
 
 ### task(bytes32 codeName, address person, uint256 data)
 reverts if:
@@ -54,7 +54,7 @@ reverts if:
 - codeToName[newCode][newName] exists
 
 functionality:
-- increases the owner balance by the value of the trasury at the codename
+- increases the owner balance by the value of the treasury at the codename
 - sets the ranks mapping[newCodeName] at to msg.sender
 - resets the taskpoints of the old codename to 0
 - deletes the old codename from its old ranks mapping
@@ -68,11 +68,11 @@ functionality:
 - add a pigeon of arbitrary rank
 
 ## Debugging
-To make it easier to debug i used my  [ParadigmCTF Debug Template](https://github.com/J4X-98/SolidityCTFToolkit/blob/main/forge/paradigmTester.sol) which uses forge. I adapted it to fit the challenge and was able to debug pretty efficiently:
+To make it easier to debug I used my  [ParadigmCTF Debug Template](https://github.com/J4X-98/SolidityCTFToolkit/blob/main/forge/paradigmTester.sol) which uses forge. I adapted it to fit the challenge and was able to debug pretty efficiently:
 
 ```solidity
 // Description:
-// A forge testcase which you cam use to easily debug challenges that were built using the Paradigm CTF framework.
+// A forge test case that you can use to easily debug challenges that were built using the Paradigm CTF framework.
 
 
 // SPDX-License-Identifier: MIT
@@ -110,7 +110,7 @@ contract ParadigmTest is Test {
     }
 
     function test() public {
-        vm.deal(attacker, 5 ether); //30 eth are the standard for the paradigm framework, but could be configured differently
+        vm.deal(attacker, 5 ether); //30 eth are the standard for the paradigm framework but could be configured differently
         vm.startPrank(attacker);
 
         //Code your solution here
@@ -124,7 +124,7 @@ contract ParadigmTest is Test {
     }
 
     function isSolved() public view returns (bool) {
-        //Copy the content of the isSolved() function from the Setup.sol contract here (maybe needs adaption is it includes msg.sender, then just change it to the attacker variable)
+        //Copy the content of the isSolved() function from the Setup.sol contract here (maybe needs adaption if it includes msg.sender, then just change it to the attacker variable)
         return attacker.balance >= 34 ether && address(pigeon).balance == 0 ether;
         return false;
     }
@@ -136,7 +136,7 @@ contract ParadigmTest is Test {
 ### What do we need to achieve?
 address(msg.sender).balance >= 34 ether && address(pigeon).balance == 0 ether;
 
-So we need to empty out the whole contract and get all the pigeons money.
+So we need to empty out the whole contract and get all the pigeons' money.
 
 ### What's the problem
 
@@ -146,7 +146,7 @@ When you know this it gets pretty easy, you just overwrite the pigeons one by on
 
 ### Solve Script
 
-To solve the challenge I wrote a Attack contract that does everything for me:
+To solve the challenge I wrote an Attack contract that does everything for me:
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED
@@ -170,7 +170,7 @@ contract Attack {
         bytes32 codename2 = keccak256(abi.encodePacked("Numbuh", "3"));
         bytes32 codename3 = keccak256(abi.encodePacked("Numbuh", "1"));
 
-        //get the money of the first pigeon by overwritting the juniorPigeon[Codename]
+        //get the money of the first pigeon by overwriting the juniorPigeon[Codename]
         target.becomeAPigeon("Num", "buh5");
         target.flyAway(codename1, 0);
 
