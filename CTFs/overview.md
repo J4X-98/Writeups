@@ -32,7 +32,7 @@ OwnerCheap - Solved
 BabyOtter - Solved
 
 ## SEECTF 2023
-OperationFeathered - Unsolved
+OperationFeathered - Solved
 PigeonBank - Unsolved
 PigeonVault - Unsolved
 SEEPass - Unsolved
