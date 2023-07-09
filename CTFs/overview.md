@@ -1,6 +1,11 @@
 ## AngstromCTF2023
 Sailors Union - Solved
 
+## CrewCTF 2023
+Positive - Unsolved
+Infinite - Unsolved
+Deception - Unsolved
+
 ## Cryptoverse2023
 Solid Reverse - Solved
 
@@ -39,3 +44,5 @@ SEEPass - Unsolved
 
 ## UMASSCTF 2023 
 CsGo But Decentralized - Solved
+
+
