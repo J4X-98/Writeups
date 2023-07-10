@@ -5,8 +5,6 @@ import "./candyToken.sol";
 import "./respectToken.sol";
 import "./crewToken.sol";
 
-
-
 /// @notice fancy store sells candies only to respectable members in the gang
 
 contract fancyStore{

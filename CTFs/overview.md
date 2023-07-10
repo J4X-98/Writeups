@@ -2,9 +2,9 @@
 Sailors Union - Solved
 
 ## CrewCTF 2023
-Positive - Unsolved
-Infinite - Unsolved
-Deception - Unsolved
+Positive - Solved
+Infinite - Solved
+Deception - Solved
 
 ## Cryptoverse2023
 Solid Reverse - Solved

@@ -24,11 +24,9 @@ contract Setup {
 
         RESPECT.transferOwnership(address(GANG));
         CANDY.transferOwnership(address(STORE));
-
-
     }
 
     function isSolved() public view returns (bool) {
-        return STORE.respectCount(CREW.receiver())>=50 ;
+        return STORE.respectCount(CREW.receiver())>=50;
     }
 }

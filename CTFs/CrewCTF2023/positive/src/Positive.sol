@@ -20,5 +20,4 @@ contract Positive{
         num = _num;
         return num;
     }
-
 }

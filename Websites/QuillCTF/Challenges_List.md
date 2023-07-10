@@ -1,14 +1,19 @@
 ## Open:
-
+- Lottery
+- LicenseManager
+- Collect
+- assertEqual
 - PseudoRandom
 - Slot Puzzle
 - Moloch’s Vault
-- WETH-11
 - Panda Token
 - Gate
 - Collatz Puzzle
 
 ## Solved:
+- Temporary Variable.
+- KeyCraft
+- WETH-11
 - NFTBank
 - Invest Pool
 - WETH-10
