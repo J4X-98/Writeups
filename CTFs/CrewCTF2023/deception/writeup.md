@@ -41,6 +41,9 @@ contract deception{
 }
 ```
 
+Challenge Description:
+Tate doesn't want you to know the truth. Find the secret.
+
 Our goal is to get the value solved to true.
 
 ## Solution

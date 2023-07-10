@@ -34,6 +34,9 @@ contract Positive{
 
 Our goal is to get the solved variable to be true.
 
+Challenge Description:
+Stay positive.
+
 ## Solution
 For this challenge, my first approach was to test some edge cases by throwing in numbers like 1, 0, -1, int64_max, int64_min while I test-deployed the challenge in Remix. This already yielded me the wanted result, as int64_min (-9223372036854775808) passed both checks and set the variable solved to true.
 

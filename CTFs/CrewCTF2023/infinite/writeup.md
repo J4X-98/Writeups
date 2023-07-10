@@ -188,6 +188,9 @@ contract localGang{
 }
 ```
 
+Challenge Description: 
+Infinite respect.
+
 Our goal is to get our respectCount variable inside the store over 50.
 
 ## Solution
