@@ -6,7 +6,7 @@ The challenge is deployed using the ParadigmCTF framework.
 
 We get a contract for Positive.sol:
 
-```solidity=
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity =0.7.6;
 
