@@ -166,7 +166,7 @@ If we look at the Setup we can see that the deployer deposits 2500ether into the
 
 ## Solution
 
-I wanted to play around with [Slither](https://github.com/crytic/slither) a bit so idecided on using it to do a basic analysis of the contract. Interestingly it yielded me 2 vulnerbailities related to the files. I cut off a lot here as it somehow also decided to analyze the whole foundry library...
+I wanted to play around with [Slither](https://github.com/crytic/slither) a bit so I decided on using it to do a basic analysis of the contract. Interestingly it yielded me 2 vulnerabilities related to the files. I cut off a lot here as it somehow also decided to analyze the whole foundry library...
 
 ```bash
 Reentrancy in PETH.withdrawAll(address) (src/PETH.sol#40-45):
@@ -184,7 +184,7 @@ and
 PETH.flashLoan(address,uint256,bytes) (src/PETH.sol#77-95) ignores return value by Address.functionCallWithValue(_userAddress,data,_wad) (src/PETH.sol#84)
 ```
 
-To me the first one (reentrancy) looked more promising. It means, that if we would be able to call the withdrawAll() function we could use the reentrancy vulnerability to fully drain the account. Unfortunately this function is protected by the onlyOwner modifier. As the Bank is the owner of PETH and it's only function that leads to withdrawAll() is protected using a reentrancy guard, we would need an additional puzzle piece to exploit this.
+To me, the first one (reentrancy) looked more promising. It means, that if we would be able to call the withdrawAll() function we could use the reentrancy vulnerability to fully drain the account. Unfortunately, this function is protected by the onlyOwner modifier. As the Bank is the owner of PETH and its only function that leads to withdrawAll() is protected using a reentrancy guard, we would need an additional puzzle piece to exploit this.
 
 My next step was to use my [ParadigmCTFDebugTemplate](https://github.com/J4X-98/SolidityCTFToolkit/blob/main/forge/paradigmTester.sol) to be able to more easily debug. I just added the code accordingly and started to debug.
 
@@ -209,7 +209,7 @@ contract ParadigmTest is Test {
     PETH peth;
 
     function setUp() public {
-	    vm.deal(deployer, 2500 ether);
+        vm.deal(deployer, 2500 ether);
         vm.startPrank(deployer);
 
         //Copy all code from the Setup.sol constructor() function into here

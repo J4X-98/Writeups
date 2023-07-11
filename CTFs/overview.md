@@ -40,7 +40,7 @@ BabyOtter - Solved
 OperationFeathered - Solved
 PigeonBank - Solved
 PigeonVault - Unsolved
-SEEPass - Unsolved
+Murky SEEPass - Solved
 
 ## UMASSCTF 2023 
 CsGo But Decentralized - Solved
