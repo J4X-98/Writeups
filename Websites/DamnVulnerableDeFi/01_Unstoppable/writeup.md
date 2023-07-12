@@ -2,13 +2,13 @@
 
 ## Challenge
 
-There’s a tokenized vault with a million DVT tokens deposited. It’s offering flash loans for free, until the grace period ends.
+There’s a tokenized vault with a million DVT tokens deposited. It’s offering flash loans for free until the grace period ends.
 
 To pass the challenge, make the vault stop offering flash loans.
 
 You start with 10 DVT tokens in balance.
 
-You are provided with the code for the flashloan providing vault:
+You are provided with the code for the flash loan providing vault:
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -139,22 +139,22 @@ contract UnstoppableVault is IERC3156FlashLender, ReentrancyGuard, Owned, ERC462
 
 ## Analysis
 
-The goal is to get the flashLoan() function to revert when another user calls it. In total there are  ways how we could get this to work. I analyzed each of them for possible attack paths:
+The goal is to get the flashLoan() function to revert when another user calls it. In total, there are a few ways how we could get this to work. I analyzed each of them for possible attack paths:
 
 ### amount == 0
-The call reverts if the given amount is 0. This can in our testcase not happen as the user after us passes a non zero amount. 
+The call reverts if the given amount is 0. This can in our test case not happen as the user after us passes a non-zero amount. 
 
 ### asset != _token
-The call would also revert if the passed token is not the asset that the vault handels, but in the testcase the right one is passed, so no exploit there :(
+The call would also revert if the passed token is not the asset that the vault handles, but in the testcase, the right one is passed, so no exploit there :(
 
 ### convertToShares(totalSupply) != totalAssets();
-This checks for the amount of totaly issued shares in the vault being the same as its balance of the token it holds. This is the part that we'll exploit in the next step.
+This checks for the amount of total issued shares in the vault being the same as the balance of the token it holds. This is the part that we'll exploit in the next step.
 
 ### safeTransfer(borrower) reverts && receiver.onFlashLoan() != keccak256("IERC3156FlashBorrower.onFlashLoan") && safeTransferFrom() reverts
-This should not happen as the safeTransfer & onFlashLoan & safeTransferFrom() is correctly implemented in the receiver that the other user will use.
+This should not happen as the safeTransfer & onFlashLoan & safeTransferFrom() are correctly implemented in the receiver that the other user will use.
 
 ### safeTransfer(fee) reverts.
-THis could happen if we are able to change the fee receiver (not possible in this case)
+This could happen if we can change the fee receiver (not possible in this case)
 
 ## Solution
 We can achieve this by triggering the revert in this code snippet:
@@ -165,4 +165,4 @@ uint256 balanceBefore = totalAssets();
 if (convertToShares(totalSupply) != balanceBefore) revert InvalidBalance(); // enforce ERC4626 requirement
 ```
 
-We are essentially comparing the totalSupply (the amount of shares issued for this vault) to the balanceBefore (the token assets balance the vault holds). If we just use the ERC4626 deposit & withdraw functions this should always work. Unfortunately this is not the only way to give tokens to the vault. If we just use transfer() to send some of the tokens we have to the vault, its balance increases but the amount of issued shares doesn't increase. So the revert is triggered at every call to flashLoan() from now on and we solved the challenge. A POC can be found in POC.js
+We are essentially comparing the totalSupply (the number of shares issued for this vault) to the balanceBefore (the token assets balance the vault holds). If we just use the ERC4626 deposit & withdraw functions this should always work. Unfortunately, this is not the only way to give tokens to the vault. If we just use transfer() to send some of the tokens we have to the vault, its balance increases but the amount of issued shares doesn't increase. So the revert is triggered at every call to flashLoan() from now on and we solved the challenge. A POC can be found in POC.js

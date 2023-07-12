@@ -79,12 +79,12 @@ contract PuppetPool is ReentrancyGuard {
 
 ## Solution
 
-Our goal in this challenge can be achieved by manipulating the price oracle. As the lending pool calculates the amount of collateral based on a exchange pool that we can access, we can change the exchange rate by buying from the pool. As this pool only has a very low liquidity and no minimum liquidity constraints, we can easily shift the exchange rate into the route that we want. This needs a few steps:
+Our goal in this challenge can be achieved by manipulating the price oracle. As the lending pool calculates the amount of collateral based on an exchange pool that we can access, we can change the exchange rate by buying from the pool. As this pool only has very low liquidity and no minimum liquidity constraints, we can easily shift the exchange rate into the route that we want. This needs a few steps:
 
 1. We approve the exchange to manage our tokens.
 2. We call the tokenToEthSwapInput() function of the exchange (as this doesn't directly reduce our balance of the token, but uses transferFrom we need to do the 1. step).
 3. The exchange swaps our tokens for eth.
-4. The exhange rate shifts to 1 eth being worth a lot more than 1 token.
+4. The exchange rate shifts to 1 eth being worth a lot more than 1 token.
 5. We send our money to the Pool and retrieve all the tokens for almost no eth.
 
 This can easily be achieved in 3 calls in the hardhat script.
@@ -95,9 +95,9 @@ await uniswapExchange.connect(player).tokenToEthSwapInput(PLAYER_INITIAL_TOKEN_B
 await lendingPool.connect(player).borrow(POOL_INITIAL_TOKEN_BALANCE, player.address, {value: await lendingPool.calculateDepositRequired(POOL_INITIAL_TOKEN_BALANCE)});
 ```
 
-This would unfortunately have been to easy, so the testcase also included the assertion that all has to be done in 1 tx. Packaging the 2. and 3. call into a constructor isn't that much of an issue, but approve() would still have to be called before. So we somehow have to also get the call to approve() into the constructor. Luckily the DVT uses a ERC20 implementation that includes functionality for the EIP2612 functionality of permit(). What permit() does, is that it allows you to set an allowance to yourself, from another contract, if you are able to present a valid signature from said contract.
+This would unfortunately have been too easy, so the test case also included the assertion that all has to be done in 1 tx. Packaging the 2. and 3. call into a constructor isn't that much of an issue, but approve() would still have to be called before. So we somehow have to also get the call to approve() into the constructor. Luckily the DVT uses an ERC20 implementation that includes functionality for the EIP2612 functionality of permit(). What permit() does, is that it allows you to set an allowance to yourself, from another contract, if you can present a valid signature from said contract.
 
-To generate a valid signature we first need to find out where our contract will be deployed. Luckily there is a ethers function for that, getContractAddress(), which we can use as we know the issuers address as well as the nonce (0).
+To generate a valid signature we first need to find out where our contract will be deployed. Luckily there is an ethers function for that, getContractAddress(), which we can use as we know the issuers' address as well as the nonce (0).
 
 ```js
 const futureAddress = ethers.utils.getContractAddress({from: player.address, nonce: 0});
@@ -109,7 +109,7 @@ Then we need to generate a valid signature for said call. We can use the ethers 
 const {v,r,s} = await signERC2612Permit(player, token.address, player.address, futureAddress, ethers.constants.MaxUint256, ethers.constants.MaxUint256);
 ```
 
-I then wrote a attack contract which executes the before mentioned steps.
+I then wrote an attack contract that executes the before-mentioned steps.
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED
@@ -144,7 +144,7 @@ contract Attack_Puppet{
 }
 ```
 
-Finally we need to deploy the contract:
+Finally, we need to deploy the contract:
 
 ```js
 const Attack_Puppet = await ethers.getContractFactory('Attack_Puppet', player);

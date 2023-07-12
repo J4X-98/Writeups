@@ -8,7 +8,7 @@ A user has deployed a contract with 10 ETH in balance. It’s capable of interac
 
 Take all ETH out of the user’s contract. If possible, in a single transaction.
 
-You are provided with the code for the flashloan providing pool:
+You are provided with the code for the flash loan providing pool:
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -81,7 +81,7 @@ contract NaiveReceiverLenderPool is ReentrancyGuard, IERC3156FlashLender {
 }
 ```
 
-you also get the code for the Reveiver:
+you also get the code for the Receiver:
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -147,11 +147,11 @@ contract FlashLoanReceiver is IERC3156FlashBorrower {
 
 ## Solution
 
-If we take a look at the testcase, we see that to solve the challenge all money in the receiver shall be drained and all of it shall now be in the pool.
+If we take a look at the test case, we see that to solve the challenge all money in the receiver shall be drained and all of it shall now be in the pool.
 
 ### Easy way
 
-As the receiver just pays the fee for any call it gets from its pool we can just call the pool 10x and set the receiver to receive the flash loan and have to pay the 1 ETH fee. This can be just achieved by calling flashloan 10x:
+As the receiver just pays the fee for any call it gets from its pool we can just call the pool 10x and set the receiver to receive the flash loan and have to pay the 1 ETH fee. This can be just achieved by calling flash loan 10x:
 
 ```js
     it('Execution', async function () {
@@ -171,11 +171,11 @@ As the receiver just pays the fee for any call it gets from its pool we can just
     });
 ```
 
-After this the receiver has transferred all his money to the pool and we solved the challenge
+After this, the receiver transferred all his money to the pool and we solved the challenge
 
 ### Hard Way
 
-The description state that we should also be able to do everything in one transaction. This is also achievable pretty easy. I just implemented a small attack contract, which if called, just calls the same flashloan function 10x. So we have one tx for everything. 
+The description state that we should also be able to do everything in one transaction. This is also achievable pretty easily. I just implemented a small attack contract, which if called, just calls the same flash loan function 10x. So we have one tx for everything. 
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED
@@ -210,4 +210,4 @@ it('Execution', async function () {
 });
 ```
 
-This yields us the same result, in one instead of ten txs.
+This yields us the same result, in one instead of ten transactions.

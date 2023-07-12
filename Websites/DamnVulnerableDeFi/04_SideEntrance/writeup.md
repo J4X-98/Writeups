@@ -4,11 +4,11 @@
 
 A surprisingly simple pool allows anyone to deposit ETH, and withdraw it at any point in time.
 
-It has 1000 ETH in balance already, and is offering free flash loans using the deposited ETH to promote their system.
+It has 1000 ETH in balance already and is offering free flash loans using the deposited ETH to promote its system.
 
 Starting with 1 ETH in balance, pass the challenge by taking all ETH from the pool.
 
-You are provided with the code for the flashloan providing pool:
+You are provided with the code for the flash loan providing pool:
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -62,9 +62,9 @@ contract SideEntranceLenderPool {
 
 ## Solution
 
-Here we once again have the same issue. We are only checking for our balance being the same before and after the loan. 
+Here we once again have the same issue. We are only checking for our balance to be the same before and after the loan. 
 
-We can abuse this by just using the flash loan to call the deposit() function passing it all the value we received from our loan (balance of the contract). When it comes to the possible revert, the balance is still the same and the flash loan finishes. But now we have all the money assigned to us using balances and can just withdraw it using the withdraw() function. I once again wrote a simple attack contract:
+We can abuse this by just using the flash loan to call the deposit() function passing it all the value we received from our loan (balance of the contract). When it comes to the possible revert, the balance is still the same, and the flash loan finishes. But now we have all the money assigned to us using balances and can just withdraw it using the withdraw() function. I once again wrote a simple attack contract:
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED
@@ -97,7 +97,7 @@ contract Attack_SideEntrance {
 }
 ```
 
-We can then just deploy and call this in the testscript the same way as we did before:
+We can then just deploy and call this in the test script the same way as we did before:
 
 ```js
 it('Execution', async function () {

@@ -8,7 +8,7 @@ The pool holds 1 million DVT tokens. You have nothing.
 
 To pass this challenge, take all tokens out of the pool. If possible, in a single transaction.
 
-You are provided with the code for the flashloan providing pool:
+You are provided with the code for the flash loan providing pool:
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -54,11 +54,11 @@ contract TrusterLenderPool is ReentrancyGuard {
 
 ## Solution
 
-If we take a look at the testcase, we see that we have to have the pools balance at the end and the pool should not have any money anymore. 
+If we take a look at the test case, we see that we have to have the pool's balance at the end and the pool should not have any money anymore. 
 
-We can achieve this by exploiting that the pool verifies that a loan was payed back by checking if its token balance is the same as before the loan was issued. This doesn't include allowances.
+We can achieve this by exploiting that the pool verifies that a loan was paid back by checking if its token balance is the same as before the loan was issued. This doesn't include allowances.
 
-What we can do is give the loan to the pool itself and then call the token.approve() function to approve ourself for spending all the tokens money. Then we return it and the balance is still the same. The problem is that now we are able to spend all the pools money without it checking. We now send all its money to the user and are done. I implemented a small attack contract that does that, as i am not a big hardhat enjoyer:
+What we can do is give the loan to the pool itself and then call the token.approve() function to approve ourselves for spending all the tokens money. Then we return it and the balance is still the same. The problem is that now we can spend all the pool money without it checking. We now send all its money to the user and are done. I implemented a small attack contract that does that, as I am not a big hardhat enjoyer:
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED

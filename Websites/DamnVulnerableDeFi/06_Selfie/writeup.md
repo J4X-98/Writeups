@@ -4,11 +4,11 @@
 
 There’s a pool offering rewards in tokens every 5 days for those who deposit their DVT tokens into it.
 
-Alice, Bob, Charlie and David have already deposited some DVT tokens, and have won their rewards!
+Alice, Bob, Charlie, and David have already deposited some DVT tokens, and have won their rewards!
 
-You don’t have any DVT tokens. But in the upcoming round, you must claim most rewards for yourself.
+You don’t have any DVT tokens. But in the upcoming round, you must claim the most rewards for yourself.
 
-By the way, rumours say a new pool has just launched. Isn’t it offering flash loans of DVT tokens?
+By the way, rumors say a new pool has just launched. Isn’t it offering flash loans of DVT tokens?
 
 You are provided with the code for the Pool:
 
@@ -208,16 +208,16 @@ contract SimpleGovernance is ISimpleGovernance {
 
 ## Solution
 
-The vulnerability here is pretty easy to spot. To get all the money from the vault we will need to call the emergencyExit() function of the pool. This function only works if its called from the governance, so we will need to get the governance to call this function. The way to do this is by queueing this call as an action, holding more than half of the tokens at that time, waiting for 2 days and then executing the action. So the game plan is:
+The vulnerability here is pretty easy to spot. To get all the money from the vault we will need to call the emergencyExit() function of the pool. This function only works if it's called from the governance, so we will need to get the governance to call this function. The way to do this is by queueing this call as an action, holding more than half of the tokens at that time, waiting for 2 days, and then executing the action. So the game plan is:
 
 1. Take out a flash loan.
 2. Take a manual snapshot using the snapshot() function of the token.
 3. Call the queueaction with the emergencyExit() function of the pool.
-4. Now our balance at the last snapshot is checked, which is giant thanks to the flashloan.
+4. Now our balance at the last snapshot is checked, which is giant thanks to the flash loan.
 5. Our action gets queued.
 6. We repay the loan.
-7. We wait for 2 days until the grace period finished.
-8. We call to execute and receive all them sweet moneys.
+7. We wait for 2 days until the grace period is finished.
+8. We call to execute and receive all their sweet money.
 
 I once again wrote an attack contract that does this for us:
 
@@ -273,7 +273,7 @@ contract Attack_Selfie is IERC3156FlashBorrower{
 }
 ```
 
-In the tescase we first need to deploy our contract and call the first function so that our action gets queued.
+In this testcase, we first need to deploy our contract and call the first function so that our action gets queued.
 
 ```js
 const Attack_Selfie = await ethers.getContractFactory('Attack_Selfie', player);
@@ -295,4 +295,4 @@ After the 2 days we can finally execute our action using the second fun of the a
 await attack.connect(player).letsAGoV2();
 ```
 
-This leads to us being able to execute the testcase properly.
+This leads to us being able to execute the test case properly.

@@ -4,11 +4,11 @@
 
 There’s a pool offering rewards in tokens every 5 days for those who deposit their DVT tokens into it.
 
-Alice, Bob, Charlie and David have already deposited some DVT tokens, and have won their rewards!
+Alice, Bob, Charlie, and David have already deposited some DVT tokens, and have won their rewards!
 
-You don’t have any DVT tokens. But in the upcoming round, you must claim most rewards for yourself.
+You don’t have any DVT tokens. But in the upcoming round, you must claim the most rewards for yourself.
 
-By the way, rumours say a new pool has just launched. Isn’t it offering flash loans of DVT tokens?
+By the way, rumors say a new pool has just launched. Isn’t it offering flash loans of DVT tokens?
 
 You are provided with the code for the Accounting token:
 
@@ -256,14 +256,14 @@ contract TheRewarderPool {
 The description already hints a lot at how we can solve this challenge. As the rewarder takes a snapshot of the balances when we call it, we can exploit this by:
 
 1. Wait until the next rewards period
-2. Take a flashloan
-3. Deposit all our dvt into the pool
+2. Take a flash loan
+3. Deposit all our DVT into the pool
 4. Call the function that distributes the rewards
-5. Withdraw all our dvt again
+5. Withdraw all our DVT again
 6. Pay back the flash loan
 7. Transfer the reward tokens to our player.
 
-I once again wrote an attack contract that does this for us:
+I once again wrote an attacking contract that does this for us:
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED
@@ -311,7 +311,7 @@ contract Attack_Rewarder {
 }
 ```
 
-In the tescase we just have to wait for 5 days using:
+In this testcase we just have to wait for 5 days using this function:
 
 ```js
 await ethers.provider.send("evm_increaseTime", [5 * 24 * 60 * 60]);
@@ -325,4 +325,4 @@ attack = await Attack_Rewarder.deploy();
 await attack.connect(player).getEmBoyz(rewarderPool.address, flashLoanPool.address);
 ```
 
-This leads to us being able to execute the testcase properly.
+This leads to us being able to execute the test case properly.
