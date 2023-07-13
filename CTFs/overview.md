@@ -39,7 +39,7 @@ BabyOtter - Solved
 ## SEECTF 2023
 OperationFeathered - Solved
 PigeonBank - Solved
-PigeonVault - Unsolved
+PigeonVault - Solved
 Murky SEEPass - Solved
 
 ## UMASSCTF 2023 
