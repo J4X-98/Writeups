@@ -284,6 +284,18 @@ contract CreateDeployer is Ownable {
 }
 ```
 
+Challenge Description:
+
+In the realm of decentralized finance, where trust is often bestowed upon code, a groundbreaking borrowing and lending platform known as LendEx was created.
+
+Unbeknownst to the LendEx team, a hacker hide a bug in the LendingPool smart contract with a intention to exploit the bug later. LendEx team reviewed smart contract source code, approved it for the usage and deposited the funds from the LendExGovernor contract to the LendingPool contract.
+
+Do you have what it takes to spot how hacker is planning to exploit the LendEx?
+
+📌 You have to fill the shoes of the hacker and execute the exploit by stealing stablecoins from a lending pool.  
+📌 Note: Foundry has a bug. If a selfdestruct() is triggered in a test script then it has to be done in the setUp() function and the rest of the code should be in a different function otherwise foundry test script does not see that selfdestruct happened to a contract.
+📌 You have to modify LendingHack.sol and setUp(), testExploit() functions for Challenge3.t.sol.
+
 ## Solution
 
 The attacker can use the create2 and selfdestruct() functionalities to switch out contracts under the owner's nose. As the contracts also hold ERC-20s instead of eth, nothing gets burned in the selfdestruct(). The attack takes a few steps.

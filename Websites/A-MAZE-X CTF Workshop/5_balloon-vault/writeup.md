@@ -40,6 +40,21 @@ contract BallonVault is ERC4626 {
 }
 ```
 
+Challenge Description:
+
+A ERC4626 vault known as the "Balloon Vault" has been built to gather WETH and invest it on multiple strategies. This vault was thought to be impenetrable, designed meticulously to maintain the security and integrity of the tokens stored within.
+
+The process was straightforward: individuals deposited their digital assets into the Balloon Vault, receiving shares in return. These shares represented their holdings and served as a way to track their savings. 
+
+Two users of the vault, Alice and Bob, have fallen prey to a potential security vulnerability, jeopardizing their significant holdings of 500 WETH each. Protocol try to reach them with no luck...
+
+You have been summoned by the custodians of the Balloon Vault, challenged to assess and exploit the lurking vulnerability, and drain the wallets of Alice and Bob before a bad actor do it. By successfully accomplishing this, you rescue 1000 WETH from Alice & Bob.
+
+📌 Drain *Bob's wallet* and *Alice's wallet*
+
+📌 End up with more than `1000 ETH` in your wallet
+
+
 ## Solution
 
 The solution relies on 2 steps. 

@@ -68,6 +68,20 @@ contract VaultFactory {
 
 ```
 
+Challenge Description:
+
+Hello whitehat! We are so thankful for your answer to our cry for help! Time is running out... There is a huge amount of tokens sitting on an address that we can't access. We need your help to rescue them!
+
+For context, we have to transfer a big big amount of these tokens to a very important organization before a deadline. Unfortunately, we made a typo in the destination address (plus we didn't check the checksummed version of the address) and now the tokens are stuck in an address that doesn't belong to anyone.
+
+However, we noticed that the address where our funds are stuck is coincidentally the same address as one of the vaults we develop but in another EVM chain... The address of the vault is `0x70E194050d9c9c949b3061CC7cF89dF9c6782b7F`, which was deployed by our vault-factory. The EOA who triggered that deploy, `0x6F77cf861457C29aCAFB6c7340Aee8fbcE84dD08` belongs to an old employee that left the company a long time ago, and we don't have access to the corresponding private key... There is little information left about this employee, we don't even know if he is still alive. The only thing that we know is that he used to work with us in the past, that his birthday was in November and that he was a big fan of the `CREATE2` opcode. What a silly guy... 
+
+Anyways, please whitehat make use of your skills to rescue the tokens and transfer them to the address of our organization!
+
+📌 Extract the 1000 `POSI` tokens from the Vault.
+
+📌 Transfer the rescued tokens to the address of the organization.
+
 ## Solution
 
 As we know that the address is already a wallet on a different EVM chain we know that it must be one of the possible 2 to the power of 256  outcomes(dependent on the salt) outcomes of create2 with the wallet's bytecode. As we know the bytecode of the wallet contract, we can just brute force through CREATE2 to see which salt generates a wallet at the given address. In reality, this isn't doable, as 2 to the power of 256 computations on the EVM will never work. But in this case, it works as it seems that the person that generated their wallet there, picked a very simple salt. So I just implemented this in the foundry testcase and only needed 11 computations to find the address. Then I just used the wallet functions to send back all the money to the devs and the challenge is solved.

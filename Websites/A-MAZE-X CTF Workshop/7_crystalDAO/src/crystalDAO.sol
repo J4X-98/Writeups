@@ -1,10 +1,3 @@
-# crystalDAO
-
-## Challenge
-
-In this challenge, we are provided with 2 contracts in one file. One is a factory that can produce new wallets using clone, and the other is the code for the wallet. 
-
-```solidity
 // SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.0;
@@ -155,24 +148,3 @@ contract FactoryDao {
         DaoVaultImplementation(wallet).initialize(msg.sender);
     }
 }
-```
-
-Challenge Description:
-
-The Crystal DAO is a transparent and non-profit DAO whose mission is to gather funds to support the development of different public goods in the Ethereum ecosystem. These funds are stored in custom treasury contracts that follow the ERC1176 minimal proxy standard, and are controlled by one DAO admin.
-
-One of such treasuries was recently deployed, and has reached the target amount of 100 ETH in its balance. Therefore, the DAO admin has tried to retrieve the funds for their subsequent donations. However, the admin's signature is not being recognized by the treasury clone contract, and the funds are now stuck, putting the DAO's reputation at risk.
-
-Can you help the DAO admin to retrieve the funds?
-
-📌 Rescue `100 ETH` from the DAO treasury.
-
-## Solution
-
-Due to an error in the initialization the owner newer gets set. You can check this by taking a look at the owner variable of the wallet. At first, this sounds like we will never be able to get a valid signature, but there is a way to pass this check. The code checks if the signer ecrecover() returns is the owner(0). So we have to find an input to ecrecover() where it returns 0 (maybe as an error code). I looked a bit around on Google and found that if you supply a different v than 27 or 28 to ecrecover() it always returns 0 in this [post](https://ethereum.stackexchange.com/questions/69328/how-to-get-the-zero-address-from-ecrecover). I then just implemented this and solved the chal.
-
-```solidity
-vault.execWithSignature(17, 0, 0, daoManager, 100 ether, "", block.timestamp + 100);
-```
-
-This works and solved the challenge.
