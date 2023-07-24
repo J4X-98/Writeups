@@ -22,7 +22,7 @@ cast call $contract "help()(string)" --rpc-url $rpc
 So there is a Encrypt function and we can also get the flag. So let's first get the flag:
 
 ```bash
-cast call $contract "getFlag()(string)" --rpc-url $rpc#
+cast call $contract "getFlag()(string)" --rpc-url $rpc
 # peyx.r5-70-y-D7fne2-ZVan59-6pg2k-6UU-mpw25=
 ```
 
