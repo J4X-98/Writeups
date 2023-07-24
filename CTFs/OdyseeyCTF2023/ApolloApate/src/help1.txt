@@ -1,0 +1,54 @@
+Story:
+
+Apollo, God of Truth wants you to see the truth
+Unfortunately, Apate is in your way. The first piece of truth however
+Is pretty clear, call it, search it, and you will find the first Truth!
+
+Functions:
+
+firstTruth() -> call it and the first flag will be yours.
+Apate() -> Apollo will never tell lies, it will lead you to Apate
+
+ABI for Apollo:
+
+[
+  {
+    "inputs": [],
+    "name": "Apate",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "firstTruth",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "help",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  }
+]

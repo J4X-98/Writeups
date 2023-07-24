@@ -1,0 +1,52 @@
+Story:
+
+Apate, does not want you to know the truth.
+She wants to keep the truth for herself, however
+she left something behind, a list of words that lead to the truth.
+What lies behind 0xe2c8f...
+
+Function:
+seekFlag(string) -> Give the correct string, then the flag will be yours.
+
+Goals:
+
+You are provided with wordlist.txt, one of them has the same value with what Apate left behind,
+Of course, it's not the full hash value, but you need to find one word that has the same value with 0xe2c8f.
+Keccak256, oh and make sure to use web3 library!
+
+ABI for Apate:
+
+[
+    {
+        "inputs": [],
+        "name": "help",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "str1",
+                "type": "string"
+            }
+        ],
+        "name": "seekFlag",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+    }
+]
