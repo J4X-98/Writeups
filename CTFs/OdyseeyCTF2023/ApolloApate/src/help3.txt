@@ -1,0 +1,85 @@
+Story:
+
+Apollo and Apate finally met, listen to what they have to say to each other.
+They might've left some clue for us. I know for sure, Apollo lead us here.
+Apate teach us how to find the truth in the sea of lies.
+Guess, History will be changed once again.
+
+Functions:
+
+finalTruth(str1,str2,str3,str4,str5) -> Listen to what Apollo and Apate have to say. Unlock the final Truth!
+   > str1 -> input the value of flag 1.
+   > str2 -> input the value of flag 2.
+   > str3 -> From the conversation what's the first key they mentioned.
+   > str4 -> From the conversation what's the second key they mentioned.
+   > str5 -> From the conversation what's the Last key they mentioned.
+
+
+trace() -> It'll give you a little bit of hint if you lost.
+
+Goal:
+
+Unveil the last truth, search the 3 keys that you need, the conversation is recorded!
+
+ABI for truth:
+
+[
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "str1",
+                "type": "string"
+            }
+        ],
+        "name": "finalTruth",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+    }
+    {
+        "inputs": [],
+        "name": "help",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+    }
+    {
+        "inputs": [],
+        "name": "mesg",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+    {
+        "inputs": [],
+        "name": "trace",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+    }
+]
