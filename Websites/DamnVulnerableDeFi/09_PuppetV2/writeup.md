@@ -1,4 +1,4 @@
-# Puppet V2
+# 09_PuppetV2
 
 ## Challenge
 
