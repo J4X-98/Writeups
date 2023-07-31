@@ -1,8 +1,7 @@
 Unsolved:
 
 7.	Compromised
-9.	Puppet V2
-10.	Free Rider
+
 11.	Backdoor
 12.	Climber
 13.	Wallet Mining
@@ -18,4 +17,6 @@ Solved:
 5.	The Rewarder
 6.	Selfie
 8.	Puppet
+9.	Puppet V2
+10.	Free Rider
 
