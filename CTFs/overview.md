@@ -1,6 +1,10 @@
 ## AngstromCTF2023
 Sailors Union - Solved
 
+## corCTF2023
+baby-wallet - Solved
+tribunal - Unsolved
+
 ## CrewCTF 2023
 Positive - Solved
 Infinite - Solved
