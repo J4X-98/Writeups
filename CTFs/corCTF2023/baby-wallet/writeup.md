@@ -89,7 +89,7 @@ cast call --rpc-url $rpc $wallet_contract "balances(address)(uint256)" $my_addr
 # Now we approve ourselves for 100eth
 cast send --rpc-url $rpc --private-key $priv_key $wallet_contract "deposit()" --value 100ether
 
-# Call the function (will prompt to input the private key)
+# Call the function
 cast send --rpc-url $rpc --private-key $priv_key $wallet_contract "approve(address,uint256)" $my_addr 100ether
 
 # Now we transfer 100 eth from us to us
