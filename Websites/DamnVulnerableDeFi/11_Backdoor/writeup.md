@@ -1,4 +1,4 @@
-# 11_Backdoor
+# Backdoor
 
 ## Challenge
 
@@ -8,13 +8,13 @@ To incentivize the creation of more secure wallets in their team, someone has de
 
 To make sure everything is safe and sound, the registry tightly integrates with the legitimate Gnosis Safe Proxy Factory, and has some additional safety checks.
 
-Currently there are four people registered as beneficiaries: Alice, Bob, Charlie and David. The registry has 40 DVT tokens in balance to be distributed among them.
+Currently, there are four people registered as beneficiaries: Alice, Bob, Charlie, and David. The registry has 40 DVT tokens in balance to be distributed among them.
 
 Your goal is to take all funds from the registry. In a single transaction.
 
 ### Initial Analysis
 
-For this challenge we are only provided with one file which is the WalletRegistry.sol. The WalletRegistry supervises the issuing of tokens to the beneficiaries (if they create a Gnosis Wallet). 
+For this challenge, we are only provided with one file which is the WalletRegistry.sol. The WalletRegistry supervises the issuing of tokens to the beneficiaries (if they create a Gnosis Wallet). 
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -154,7 +154,7 @@ contract WalletRegistry is IProxyCreationCallback, Ownable {
 }
 ```
 
-Besides this we are also deploying a GnosisSafe (which we can use as a singleton later), a GnosisSafeProxyFactory (that we must use to generate the proxies) and our DamnValuableToken of which we want to steal 40.
+Besides this, we are also deploying a GnosisSafe (which we can use as a singleton later), a GnosisSafeProxyFactory (that we must use to generate the proxies), and our DamnValuableToken of which we want to steal 40.
 
 ## Solution
 
@@ -162,11 +162,11 @@ Although the codebase looked a bit overwhelming to me at the start (I've never s
 
 ### How backdoor?
 
-We can implement a backdoor into a wallet by abusing the setupModules() functionality to execute arbitrary code on behalve of the wallet. In our case it already is sufficient to just set a approval for 10 tokens to the attacker, but we could also implement way more fucntioanlities if we want. This occurs due the case that the wallet does a delegatecall to a address which we can choose. During this delegatecall we can manipulate storage and do external calls with the wallet as msg.sender.
+We can implement a backdoor into a wallet by abusing the setupModules() functionality to execute arbitrary code on behalf of the wallet. In our case, it already is sufficient to just set an approval for 10 tokens to the attacker, but we could also implement way more functionalities if we want. This occurs due to the case that the wallet does a delegatecall to an address which we can choose. During this delegatecall we can manipulate storage and do external calls with the wallet as msg.sender.
 
 ### Implementing the backdoor
 
-As we don't really need to add a full backdoor but just do one call on behalf of the wallet it was pretty easy. I implemented a simple contract, to which the delegatecall will go and it will approve the attacking contract for uint256max tokens on behalve of the safe. This way the attacker contract can transfer out the tokens easily after thesafe has received them "legitimately".
+As we don't really need to add a full backdoor but just do one call on behalf of the wallet it was pretty easy. I implemented a simple contract, to which the delegatecall will go and it will approve the attacking contract for uint256max tokens on behalf of the safe. This way the attacker contract can transfer out the tokens easily after the safe has received them "legitimately".
 
 ```solidity
 contract MaliciousModule {
@@ -181,15 +181,15 @@ contract MaliciousModule {
 
 To be able to get the tokens of one user we need to do a few steps:
 1. Deploy the malicious module
-2. Deploy a proxy on the users behalf and add the data for the setup in the initializer value and the WalletRegistry as the callback
-3. Inside the data for the setup we need to set the address of the malicious module as to and the calldata for its setApprovals() function as data
+2. Deploy a proxy on the users' behalf and add the data for the setup in the initializer value and the WalletRegistry as the callback
+3. Inside the data for the setup we need to set the address of the malicious module and the calldata for its setApprovals() function as data
 4. Now the safe gets deployed and the malicious module gets run and the approval is set
 5. Afterwards the ProxyFactory automatically calls to the registry and as all parameters fit the safe gets the 10 tokens
 6. The attacker contract transfers the tokens from the safe to the player
 
 ### Doing it all at Once
 
-Our last requirements is that all of the users need to be drained in one transaction. So I decided on doing all of this in a contracts constructor. You can see my implementation below:
+Our last requirement is that all of the users need to be drained in one transaction. So I decided on doing all of this in a contracts constructor. You can see my implementation below:
 
 ```solidity
 contract BackdoorAttacker {
@@ -220,7 +220,7 @@ contract BackdoorAttacker {
 
 ### The POC
 
-Finally I needed to run this inside the testfile. as we anyways only have one transaction, this can be done in one function call:
+Finally, I needed to run this inside the test file. As we anyways only have one transaction, this can be done in one function call:
 
 ```js
 it('Execution', async function () {
