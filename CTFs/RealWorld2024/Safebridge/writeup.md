@@ -1,6 +1,4 @@
 
-
-
 # Challenge
 
 The Safebridge challenge simulates a L1->L2 bridge, which can be used to brige all kinds of ERC20 tokens. The most important files for the challenge are the `L1ERC20Bridge.sol` and the `L2ERC20Bridge.sol`. The 2 files handle all the transactions from L1 to L2 and vice versa.
@@ -40,7 +38,7 @@ Unfortunately if the `_l1Token` is WETH and `_l2Token` is any other token than L
 
 # Exploit
 
-The isseu can be split into multiple steps.
+The issue can be split into multiple steps.
 
 1. Wrap 2 ether in L1WETH
 2. Deploy a malicious token contract on L2 called SCAM
